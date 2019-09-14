@@ -25,16 +25,6 @@ public class AuthorDao extends AstractDao {
 		return getJdbcTemplate().update("DELETE FROM Author WHERE AuthorId = ?", id);
 	}
 
-//	public int delete(String list[]) {
-//		try{
-//		for (String id : list) {
-//			return getJdbcTemplate().update("DELETE FROM Author WHERE AuthorId = ?", Integer.parseInt(id));
-//		}}catch(Exception e){
-//			
-//		}
-//		return 1;
-//	}
-
 	public int delete(List<Integer> list) {
 		for (Integer id : list) {
 			return getJdbcTemplate().update("DELETE FROM Author WHERE AuthorId = ?", id);

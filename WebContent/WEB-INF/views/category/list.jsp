@@ -21,14 +21,14 @@
 </script>
 </head>
 <body>
-	<a href="${pageContext.request.contextPath}/admin/author/add.htm"
+	<a href="${pageContext.request.contextPath}/admin/category/add.htm"
 		class="btn btnprimary">Add</a>
 	<div></div>
 	<form method="post"
-		action="${pageContext.request.contextPath}/admin/author/dels.htm">
+		action="${pageContext.request.contextPath}/admin/category/dels.htm">
 
 		<input type="submit" value="Delete"
-			onclick="return confirm('Are you sure you want to delete these authors? \n${list.size()} item')" />
+			onclick="return confirm('Are you sure you want to delete these category?')" />
 		<br /> ${error} <br />
 		<table border="1" style="width: 100%" class="table">
 			<tr>
@@ -38,20 +38,20 @@
 				<th>Edit</th>
 				<th>Delete</th>
 			</tr>
-			<c:forEach items="${list}" var="author">
+			<c:forEach items="${list}" var="category">
 				<tr>
 					<td><input type="checkbox" class="checkboxId"
-						value="${author.id}" name="authorIds"/></td>
-					<td>${author.id}</td>
-					<td>${author.name}</td>
+						value="${category.id}" name="categoryIds" /></td>
+					<td>${category.id}</td>
+					<td>${category.name}</td>
 					<td><a
-						href="${pageContext.request.contextPath}/admin/author/edit/${author.id}.htm">
+						href="${pageContext.request.contextPath}/admin/category/edit/${category.id}.htm">
 							<img src="${pageContext.request.contextPath}/images/edit.png"
 							alt="Edit">
 					</a></td>
 					<td><a
-						onclick="return confirm('Are you sure you want to delete ${author.name}?')"
-						href="${pageContext.request.contextPath}/admin/author/del/${author.id}.htm">
+						onclick="return confirm('Are you sure you want to delete ${category.name}?')"
+						href="${pageContext.request.contextPath}/admin/category/del/${category.id}.htm">
 							<img src="${pageContext.request.contextPath}/images/trash.png"
 							alt="Delete">
 					</a></td>
