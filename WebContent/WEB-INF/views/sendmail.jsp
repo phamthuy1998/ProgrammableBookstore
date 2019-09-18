@@ -8,7 +8,9 @@
 </head>
 <body>
 	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-	<form method="post" class="form">
+	
+	
+	<form method="sendmail.htm" class="form">
 		<p>
 			<label>Email</label> <input type="email" name="email">
 		</p>

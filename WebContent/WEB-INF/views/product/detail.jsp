@@ -14,7 +14,7 @@
 			Price: <b>${o.price}</b>
 		</p>
 		<form method="post"
-			action="${pageContext.request.contextPath}/user/cart/add.html">
+			action="${pageContext.request.contextPath}/cart/add.htm">
 
 			<input type="hidden" value="${o.id}" name="productId"> <input
 				type="number" name="quantity" value="1">

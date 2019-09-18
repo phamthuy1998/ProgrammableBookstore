@@ -15,22 +15,22 @@ import phamthuy.ptithcm.model.MailInfo;
 
 @Controller
 public class SendEmailController {
-//	
-//	@Autowired
-//	private JavaMailSender mailSender;
+	
+	@Autowired
+	private JavaMailSender mailSender;
 
 	@RequestMapping("sendmail")
 	public String index() {
 		return "sendmail";
 	}
 
-//	@RequestMapping(value = "sendmail", method = RequestMethod.POST)
-//	public String index(@Validated @ModelAttribute("obj") MailInfo obj) {
-//		SimpleMailMessage message = new SimpleMailMessage();
-//		message.setTo(obj.getEmail());
-//		message.setSubject(obj.getSubject());
-//		message.setText(obj.getSubject());
-//		mailSender.send(message);
-//		return "sendmail";
-//	}
+	@RequestMapping(value = "sendmail", method = RequestMethod.POST)
+	public String index(@Validated @ModelAttribute("obj") MailInfo obj) {
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setTo(obj.getEmail());
+		message.setSubject(obj.getSubject());
+		message.setText(obj.getSubject());
+		mailSender.send(message);
+		return "sendmail";
+	}
 }
