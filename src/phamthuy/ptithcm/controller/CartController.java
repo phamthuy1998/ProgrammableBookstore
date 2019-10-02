@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import phamthuy.ptit.helper.Helper;
 import phamthuy.ptithcm.dao.CartDao;
 import phamthuy.ptithcm.dao.InvoiceDao;
 import phamthuy.ptithcm.model.Cart;
@@ -45,15 +46,7 @@ public class CartController {
 			}
 		}
 		if (id == null || id.equals("")) {
-			String ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_";
-			SecureRandom RANDOM = new SecureRandom();
-			StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < 32; ++i) {
-				sb.append(ALPHABET.charAt(RANDOM.nextInt(ALPHABET.length())));
-			}
-
-			id = sb.toString();
-
+			id = Helper.randomString();
 			Cookie cookie = new Cookie("cart", id);
 			cookie.setPath(request.getServletContext().getContextPath());
 			cookie.setMaxAge(30 * 24 * 3600);

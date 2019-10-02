@@ -8,7 +8,7 @@
 	<c:forEach var="o" items="${list}">
 		<div class="col-4">
 			<div class="item">
-				<img alt="${o.title}" height="285" width="200"
+				<img alt="${o.title}" height="285"
 					src="${o.imageUrl}" >
 				<div class="info">
 					<a href="${pageContext.request.contextPath}/home/product/detail/${o.id}.htm">${o.title}</a>

@@ -10,6 +10,7 @@ import phamthuy.ptithcm.model.Author;
 import phamthuy.ptithcm.model.Cart;
 
 public class CartDao extends AstractDao {
+	
 	public List<Cart> getCarts(String id) {
 		List<Cart> list = getJdbcTemplate().query("EXEC GetCarts ?", new CartMapper(), id);
 		return list;
