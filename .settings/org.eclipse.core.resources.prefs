@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//i18n-res/login_vi.properties=UTF-8
 encoding//src/phamthuy/ptit/helper/Helper.java=UTF-8
 encoding//src/phamthuy/ptithcm/controller/AuthorController.java=UTF-8
 encoding//src/phamthuy/ptithcm/controller/SendEmailController.java=UTF-8

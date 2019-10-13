@@ -16,6 +16,29 @@
 	<context:annotation-config />
 	<mvc:annotation-driven />
 
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="basenames">
+			<list>
+				<value>classpath:login</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<!-- <property name="defaultLocale" value="vi" /> -->
+		<property name="cookieMaxAge" value="43200" />
+	</bean>
+
+	<mvc:interceptors>
+		<bean id="localeChangeInterceptor"
+			class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="language" />
+		</bean>
+	</mvc:interceptors>
+
 	<!-- Cấu hình view -->
 	<bean id="viewResolver" p:prefix="/WEB-INF/views/" p:suffix=".jsp"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver" />
@@ -30,24 +53,13 @@
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 
-<!-- 
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		SMTP settings
-		<property name="host" value="smtp.gmail.com" />
-		<property name="port" value="465" />
-		<property name="username" value="congnghephanmenptithcm@gmail.com" />
-		<property name="password" value="quankhung123" />
-		<property name="javaMailProperties">        
-		additional properties specific to JavaMail
-			<props>
-				<prop key="mail.smtp.auth">true</prop>
-				<prop key="mail.smtp.socketFactory.port">465</prop>
-				<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
-				<prop key="mail.smtp.port">587</prop>
-				<prop key="mail.transport.protocol">smtp</prop>
-				<prop key="mail.smtp.starttls.enable">true</prop>
-			</props>
-		</property>
-	</bean>  -->
+	<!-- <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"> 
+		SMTP settings <property name="host" value="smtp.gmail.com" /> <property name="port" 
+		value="465" /> <property name="username" value="congnghephanmenptithcm@gmail.com" 
+		/> <property name="password" value="quankhung123" /> <property name="javaMailProperties"> 
+		additional properties specific to JavaMail <props> <prop key="mail.smtp.auth">true</prop> 
+		<prop key="mail.smtp.socketFactory.port">465</prop> <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop> 
+		<prop key="mail.smtp.port">587</prop> <prop key="mail.transport.protocol">smtp</prop> 
+		<prop key="mail.smtp.starttls.enable">true</prop> </props> </property> </bean> -->
 
 </beans>

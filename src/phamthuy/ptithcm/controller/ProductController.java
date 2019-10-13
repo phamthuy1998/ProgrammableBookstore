@@ -16,7 +16,7 @@ public class ProductController {
 	private static int size = 6;
 
 	@RequestMapping(value = {"home/products", "home/products/{p}" })
-	public String index(Model model, @PathVariable(value = "p", required = false) Integer page) {
+	public String index(Model model, @PathVariable(value = "p") Integer page) {//, required = false
 		model.addAttribute("title", "Mini Shop");
 		int pageNum = (int) Math.ceil(productDao.count() / (double) size);
 		model.addAttribute("pageNum", pageNum);

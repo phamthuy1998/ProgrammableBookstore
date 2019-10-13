@@ -2,6 +2,7 @@
     <wb-module deploy-name="ProgrammableBookstore">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/i18n-res"/>
         <property name="context-root" value="ProgrammableBookstore"/>
         <property name="java-output-path" value="/ProgrammableBookstore/build/classes"/>
     </wb-module>

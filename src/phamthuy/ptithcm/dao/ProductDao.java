@@ -50,12 +50,6 @@ public class ProductDao extends AstractDao {
 	}
 
 	public List<Product> search(String q) {
-		return getJdbcTemplate().query("SELECT * FROM Product WHERE Title LIKE ?", new ProductMapper() {
-			@Override
-			public Product mapRow(ResultSet rs, int numRow) throws SQLException {
-				return new Product(rs.getInt("ProductId"), rs.getString("Title"), rs.getString("ISBN"),
-						rs.getInt("Price"), rs.getString("Pages"), rs.getString("ImageUrl"));
-			}
-		}, "%" + q + "%");
+		return getJdbcTemplate().query("SELECT * FROM Product WHERE Title LIKE ?", new ProductMapper(), "%" + q + "%");
 	}
 }

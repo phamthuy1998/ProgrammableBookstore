@@ -8,7 +8,7 @@
 <script type="text/javascript">
 	function delayer(delay) {
 		onLoad = setTimeout(
-				'window.location.href = "http://localhost:9001/ProgrammableBookstore/home/products/1.htm"',
+				'window.location.href = "${pageContext.servletContext.contextPath}/home/products/1.htm"',
 				delay);
 	}
 </script>
