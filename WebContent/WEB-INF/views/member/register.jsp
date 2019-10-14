@@ -3,6 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
+
 <html>
 <head>
 <meta http-equiv="Content-Type" charset="utf-8">
@@ -22,6 +23,16 @@
 									+ lang, function() {
 								location.reload();
 							});
+					$.get(
+							"${pageContext.request.contextPath}/user/login.htm?language="
+									+ lang, function() {
+								location.reload();
+							});
+					$.get(
+							"${pageContext.request.contextPath}/user/forgot.htm?language="
+									+ lang, function() {
+								location.reload();
+							});
 					return false;
 				});
 	});
@@ -30,46 +41,52 @@
 </head>
 <body class="body-login">
 
-	<a href="#" data-lang="en">English</a> |
-	<a href="#" data-lang="vi">Tiếng Việt</a>
+	<a href="#" data-lang="en"><s:message code="label.en" /></a> |
+	<a href="#" data-lang="vi"><s:message code="label.vi" /></a>
 	<div class="login">
 		<div class="col-ms-8 mx-auto">
-			<form method="post" class="form-login">
-				<h1 class="center lb-login"><s:message code="label.register" /></h1>
+			<form:form method="post" class="form-login" modelAttribute="member">
+				<h1 class="center lb-login">
+					<s:message code="label.register" />
+				</h1>
 				<br>
+
+
 				<div>
-					<label><s:message code="label.username"/></label> <input
-						class="form-control" placeholder="<s:message code="label.username"/>" type="text"
+					<label><s:message code="label.username" /></label> <input
+						class="form-control"
+						placeholder="<s:message code="label.username"/>" type="text"
 						name="username">
+					<form:errors path="username" />
 				</div>
 
 				<div>
 					<label><s:message code="label.email" /></label> <input
-						type="email" class="form-control" placeholder="<s:message code="label.email" />" name="email">
+						type="email" class="form-control"
+						placeholder="<s:message code="label.email" />" name="email">
+					<form:errors path="email" />
 				</div>
 
 				<div>
 					<label><s:message code="label.password" /></label> <input
-						class="form-control" placeholder="<s:message code="label.password" />" type="password"
+						class="form-control"
+						placeholder="<s:message code="label.password" />" type="password"
 						name="password">
+					<form:errors path="password" />
 				</div>
 
 				<div>
 					<label><s:message code="label.phone" /></label> <input
-						type="number" class="form-control" placeholder="<s:message code="label.phone" />" name="tel">
+						type="number" class="form-control"
+						placeholder="<s:message code="label.phone" />" name="tel">
+					<form:errors path="tel" />
 				</div>
 
 				<br>
 
 				<div>
-					<label><s:message code="label.gender" /></label>
-					<!-- <select name="gender">
-							<option value="0">Male</option>
-							<option value="1">Female</option>
-							<option value="2">Undefined</option>
-						</select> -->
-
-					<input type="radio" name="gender" value="0" checked>
+					<label><s:message code="label.gender" /></label> <input
+						type="radio" name="gender" value="0" checked>
 					<s:message code="label.male" />
 					<input value="1" type="radio" name="gender">
 					<s:message code="label.female" />
@@ -96,7 +113,7 @@
 						href="${pageContext.request.contextPath}/user/forgot.htm"><s:message
 							code="label.forgotpassword" /></a>
 				</div>
-			</form>
+			</form:form>
 		</div>
 	</div>
 

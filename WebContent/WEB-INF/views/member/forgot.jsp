@@ -1,4 +1,5 @@
 <%@ page language="java" pageEncoding="utf-8"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
@@ -12,30 +13,45 @@
 </head>
 <body class="body-login">
 	<div class="login">
-			<div class="col-ms-8 mx-auto">
-				<form method="post" class="form-login">
-					<h1 class="center lb-login">Forgot Password</h1>
-					<br> 
-					<div>
-						<label>Email</label> <input type="email" class="form-control"
-							placeholder="Email" name="email">
-					</div>
+		<div class="col-ms-8 mx-auto">
+			<form:form method="post" class="form-login" modelAttribute="email">
+				<h1 class="center lb-login">
+					<s:message code="label.forgotpassword" />
+				</h1>
+				
+${message}
+				<br>
+				<div>
+					<label><s:message code="label.email" /></label> <input
+						type="email" class="form-control"
+						placeholder="<s:message code="label.email" />" name="email">
+				</div>
 
-					<br>
+				<br>
+				<br>
 
-					<div class="center">
-						<button h class="btn btn-lg btn-primary">Reset Password</button>
-					</div>
-					
-					<div class="center">
-						<a class="btn-register" href="${pageContext.request.contextPath}/user/login.htm">Log
-							On</a>
-					</div>
-					<div class="center">
-						<a class="btn-register"  href="${pageContext.request.contextPath}/user/forgot.htm">Forgot
-							Password?</a>
-					</div>
-				</form>
+				<div class="center">
+					<button class="btn btn-lg btn-primary">
+						<s:message code="label.resetpw" />
+					</button>
+				</div>
+
+				<br>
+
+				<div class="center">
+					<a class="btn-register"
+						href="${pageContext.request.contextPath}/user/login.htm"><s:message
+							code="label.login" /></a>
+				</div>
+
+				<br>
+
+				<div class="center">
+					<a class="btn-register"
+						href="${pageContext.request.contextPath}/user/forgot.htm"><s:message
+							code="label.forgotpassword" /></a>
+				</div>
+			</form:form>
 		</div>
 	</div>
 </body>

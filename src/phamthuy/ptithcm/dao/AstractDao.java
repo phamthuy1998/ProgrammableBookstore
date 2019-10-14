@@ -15,8 +15,6 @@ public class AstractDao {
 			dataSource.setPassword("123");
 			jdbcTemplate= new JdbcTemplate(dataSource);
 			System.out.println("Kết nối thành công");
-		}else {
-			System.out.println("Kết nối that bai");
 		}
 		return jdbcTemplate; 
 	}

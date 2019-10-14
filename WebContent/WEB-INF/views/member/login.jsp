@@ -1,4 +1,5 @@
 <%@ page language="java" pageEncoding="utf-8"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
@@ -9,41 +10,64 @@
 <script src="../js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/css.css">
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+<script>
+	$(function() {
+		$("a[data-lang]").click(
+				function() {
+					var lang = $(this).attr("data-lang");
+					$.get(
+							"${pageContext.request.contextPath}/user/register.htm?language="
+									+ lang, function() {
+								location.reload();
+							});
+					return false;
+				});
+	});
+</script>
+
 </head>
 <body class="body-login">
 	<div class="login">
 		<div class="col-ms-8 mx-auto">
-			<form method="post" class="form-login">
-				<h1 class="center lb-login">Login</h1>
-				<br> <input type="hidden" name="${_csrf.parameterName}"
-					value="${_csrf.token}" />
+			<form:form method="post" class="form-login" modelAttribute="member">
+				<h1 class="center lb-login">
+					<s:message code="label.login" />
+				</h1>
+				<br> 
+				
 				<div>
-					<label>Email</label> <input class="form-control" value="admin"
-						placeholder="Username" type="text" name="username">
+					<label><s:message code="label.emailorphone" /></label> <input
+						class="form-control" placeholder="<s:message code="label.emailorphone" />"
+						type="text" name="email">
 				</div>
 				<div>
-					<label>Password</label> <input class="form-control" value="123"
-						placeholder="Password" type="password" name="password">
+					<label><s:message code="label.password" /></label> <input
+						class="form-control"
+						placeholder="<s:message code="label.password" />" type="password"
+						name="password">
 				</div>
-				<div>
+				<%-- <div>
 					<label> <input type="checkbox" name="remember" value="1">
-						Remember me
+						<s:message code="label.rememberme" />
 					</label>
-				</div>
+				</div> --%>
+				<br>	
 				<div>
-					<button class="btn btn-lg btn-primary">Login</button>
+					<button class="btn btn-lg btn-primary"><s:message code="label.login" /></button>
 				</div>
 				<br>
 				<div class="center">
-					<a class="btn-register" href="${pageContext.request.contextPath}/user/register.htm">Register
-						an Account</a>
+					<a class="btn-register"
+						href="${pageContext.request.contextPath}/user/register.htm"><s:message
+							code="label.regislink" /></a>
 				</div>
 				<br>
 				<div class="center">
-					<a class="btn-register" href="${pageContext.request.contextPath}/user/forgot.htm">Forgot
-						Password?</a>
+					<a class="btn-register"
+						href="${pageContext.request.contextPath}/user/forgot.htm"><s:message
+							code="label.forgotpassword" /></a>
 				</div>
-			</form>
+			</form:form>
 		</div>
 	</div>
 </body>
