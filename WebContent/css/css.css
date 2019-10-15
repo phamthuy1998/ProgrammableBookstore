@@ -7,6 +7,13 @@ body {
 	background-color: #f8f8f8;
 }
 
+.img-product {
+	width: auto;
+	height:auto
+	max-height: 400px;
+}
+
+
 body.body-login {
 	background:
 		url('https://stamma.org/sites/default/files/styles/lead_image_desktop/public/fields/lead_image/Resources_library_books.jpg?itok=Yj1l-cAs')
@@ -23,15 +30,17 @@ a {
 	text-decoration: none;
 	color: #337ab7;
 }
-a.btn-register{
+
+a.btn-register {
 	text-decoration: underline;
 	color: #004080;
 	font-weight: bold;
 }
 
-.btn-login{
+.btn-login {
 	background-color: #004080;
-	border-color: #004080;}
+	border-color: #004080;
+}
 
 li {
 	list-style-type: none;
@@ -84,11 +93,23 @@ li {
 	color: #777;
 }
 
+.checkout-cart {
+	height: 30vh;
+	display: flex;
+	just-content: center;
+	align-items: center;
+}
+
+form.form-check-out {
+	padding: 50px;
+	width: 500px;
+}
+
 .login {
 	height: 100vh;
 	display: flex;
 	just-content: center;
-	align-items	: center; 
+	align-items: center;
 }
 
 form.form-login {
@@ -98,7 +119,7 @@ form.form-login {
 	border-radius: 5px;
 }
 
-.lb-login{
+.lb-login {
 	text-align: center;
 	color: #004080;
 }
@@ -321,26 +342,56 @@ form.form-login {
 }
 
 .btn
+
+
+
+
 :not
+
+
  
+
+
 (
 :disabled
+
+
  
+
+
 )
 :not
+
+
  
+
+
 (
 .disabled
+
+
  
+
+
 )
 {
 cursor
+
+
+
+
 :
+
+
  
+
+
 pointer
+
+
+
+
 ;
-
-
 }
 a.btn.disabled, fieldset:disabled a.btn {
 	pointer-events: none;
@@ -664,26 +715,56 @@ a.btn.disabled, fieldset:disabled a.btn {
 }
 
 .page-link
+
+
+
+
 :not
+
+
  
+
+
 (
 :disabled
+
+
  
+
+
 )
 :not
+
+
  
+
+
 (
 .disabled
+
+
  
+
+
 )
 {
 cursor
+
+
+
+
 :
+
+
  
+
+
 pointer
+
+
+
+
 ;
-
-
 }
 .page-item:first-child .page-link {
 	margin-left: 0;

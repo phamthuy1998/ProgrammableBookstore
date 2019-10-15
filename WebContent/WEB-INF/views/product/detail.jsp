@@ -1,6 +1,6 @@
 <div class="products">
 	<div class="col-4">
-		<img src="${o.imageUrl}" height="285" width="200">
+		<img src="${pageContext.request.contextPath}/images/${o.id}.jpg" width="300" >
 	</div>
 	<div class="col-8">
 		<h2>${o.title}</h2>

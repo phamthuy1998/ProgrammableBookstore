@@ -7,11 +7,18 @@ import java.util.List;
 import org.springframework.jdbc.core.RowMapper;
 
 import phamthuy.ptit.helper.Helper;
+import phamthuy.ptithcm.mapper.AuthorMapper;
 import phamthuy.ptithcm.mapper.MemberMapper;
+import phamthuy.ptithcm.model.Author;
 import phamthuy.ptithcm.model.Member;
 import phamthuy.ptithcm.model.Role;
 
 public class MemberDao extends AstractDao {
+	
+	public List<Member> getAllMember() {
+		List<Member> list = getJdbcTemplate().query("SELECT * FROM Member", new MemberMapper());
+		return list;
+	}
 
 	public int add(Member member) {
 		String pass = Helper.bCrypt(member.getPassword());

@@ -3,12 +3,16 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-
 <html>
 <head>
 <meta http-equiv="Content-Type" charset="utf-8">
 <title>Sign In|Sign up</title>
-
+<style type="text/css">
+span {
+	color: red;
+	font-style: italic;
+}
+</style>
 <script src="../js/jquery-1.9.1.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/css.css">
@@ -45,50 +49,46 @@
 	<a href="#" data-lang="vi"><s:message code="label.vi" /></a>
 	<div class="login">
 		<div class="col-ms-8 mx-auto">
-			<form:form method="post" class="form-login" modelAttribute="member">
+
+			<form:form modelAttribute="member" method="post"
+				action="${pageContext.request.contextPath}/user/register.htm"
+				class="form-login">
 				<h1 class="center lb-login">
 					<s:message code="label.register" />
 				</h1>
 				<br>
 
-
 				<div>
-					<label><s:message code="label.username" /></label> <input
-						class="form-control"
-						placeholder="<s:message code="label.username"/>" type="text"
-						name="username">
+					<label><s:message code="label.username" /></label>
+					<form:input class="form-control" path="username" type="text" />
 					<form:errors path="username" />
 				</div>
 
 				<div>
-					<label><s:message code="label.email" /></label> <input
-						type="email" class="form-control"
-						placeholder="<s:message code="label.email" />" name="email">
+					<label><s:message code="label.email" /></label>
+					<form:input class="form-control" path="email" type="email" />
 					<form:errors path="email" />
 				</div>
 
 				<div>
-					<label><s:message code="label.password" /></label> <input
-						class="form-control"
-						placeholder="<s:message code="label.password" />" type="password"
-						name="password">
+					<label><s:message code="label.password" /></label>
+					<form:input class="form-control" type="password" path="password" />
 					<form:errors path="password" />
 				</div>
 
 				<div>
-					<label><s:message code="label.phone" /></label> <input
-						type="number" class="form-control"
-						placeholder="<s:message code="label.phone" />" name="tel">
+					<label><s:message code="label.phone" /></label>
+					<form:input type="number" class="form-control" path="tel" />
 					<form:errors path="tel" />
 				</div>
 
 				<br>
 
 				<div>
-					<label><s:message code="label.gender" /></label> <input
-						type="radio" name="gender" value="0" checked>
+					<label class="mr-2"><s:message code="label.gender" /></label> <input
+						type="radio" name="gender" value="0" checked class="ml-3">
 					<s:message code="label.male" />
-					<input value="1" type="radio" name="gender">
+					<input value="1" type="radio" name="gender" class="ml-3">
 					<s:message code="label.female" />
 					<br>
 				</div>

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import phamthuy.ptit.helper.Helper;
 import phamthuy.ptithcm.dao.MemberDao;
+import phamthuy.ptithcm.model.Invoice;
 import phamthuy.ptithcm.model.Member;
 import phamthuy.ptithcm.model.Role;
 
@@ -28,32 +30,40 @@ public class MemberController {
 	public static Role roleLoginForm;
 	public static Member memberLoginForm;
 
-	@RequestMapping("user/register")
-	public String showRegister() {
+	// show list author
+	@RequestMapping("admin/users")
+	public String index(Model model) {
+		model.addAttribute("list", memberDao.getAllMember());
+		return "member/list";
+	}
+
+	@RequestMapping(value = "user/register")
+	public String register(Model model) {
+		model.addAttribute("member", new Member());
 		return "member/register";
 	}
 
 	@RequestMapping(value = "user/register", method = RequestMethod.POST)
-	public String register(ModelMap model, @ModelAttribute("member") Member member, BindingResult errors) {
+	public String register(Model model, @ModelAttribute("member") Member member, BindingResult errors) {
 
 		if (member.getUsername().trim().equals("")) {
-			errors.rejectValue("username", "Vui lòng nhập username!");
+			System.out.println("user name rong");
+			errors.rejectValue("username", "member", "Vui lòng nhập username!");
 		}
 
 		if (member.getEmail().trim().equals("")) {
+			System.out.println("mail name rong");
 			errors.rejectValue("email", "member", "Vui lòng nhập username!");
 		}
 
 		if (member.getPassword().trim().equals("")) {
+			System.out.println("pass name rong");
 			errors.rejectValue("password", "member", "Vui lòng nhập password!");
 		}
 
 		if (member.getTel().trim().equals("")) {
+			System.out.println("tel name rong");
 			errors.rejectValue("tel", "member", "Vui lòng nhập fullname!");
-		}
-
-		if (errors.hasErrors()) {
-			model.addAttribute("message", "Vui long sua loi");
 		}
 
 		if (member != null) {
@@ -142,7 +152,7 @@ public class MemberController {
 				mailer.send(mail);
 				if (memberDao.updatePassword(password, email) > 0) {
 					model.addAttribute("message", "dat mat khau thanh cong !");
-				}else{
+				} else {
 					model.addAttribute("message", "dat mat khau that bai!");
 				}
 			} catch (Exception ex) {

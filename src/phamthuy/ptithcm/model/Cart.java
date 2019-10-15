@@ -3,8 +3,8 @@ package phamthuy.ptithcm.model;
 import java.util.Date;
 
 public class Cart {
-	private String id;
-	private Long memberId;
+	private int id;
+	private int memberId;
 	private int productId;
 	private String title;
 	private String imageUrl;
@@ -20,7 +20,7 @@ public class Cart {
 		this.addDate = addDate;
 	}
 
-	public Cart(String id, Long memberId, int productId, String title, String imageUrl, int price, short quantity,
+	public Cart(int id, int memberId, int productId, String title, String imageUrl, int price, short quantity,
 			Date addDate) {
 		super();
 		this.id = id;
@@ -33,7 +33,7 @@ public class Cart {
 		this.addDate = addDate;
 	}
 
-	public Cart(String id, int productId, String title, String imageUrl, int price, short quantity) {
+	public Cart(int id, int productId, String title, String imageUrl, int price, short quantity) {
 		this.id = id;
 		this.productId = productId;
 		this.title = title;
@@ -42,19 +42,19 @@ public class Cart {
 		this.quantity = quantity;
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public Long getMemberId() {
+	public int getMemberId() {
 		return memberId;
 	}
 
-	public void setMemberId(Long memberId) {
+	public void setMemberId(int memberId) {
 		this.memberId = memberId;
 	}
 

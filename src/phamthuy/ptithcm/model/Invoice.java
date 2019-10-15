@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 public class Invoice {
-	private String id;
-	private Long memberId;
+	private int id;
+	private int memberId;
 	private String tel;
 	private String address;
 	private String email;
@@ -17,11 +17,19 @@ public class Invoice {
 	public Invoice() {
 	}
 
-	public Invoice(String id, Long memberId, String tel, String address, String email) {
-		this(id, memberId, tel, address, email, Byte.MIN_VALUE, null, null);
+	public Invoice(String tel, String address, String email) {
+		super();
+		this.tel = tel;
+		this.address = address;
+		this.email = email;
 	}
 
-	public Invoice(String id, Long memberId, String tel, String address, String email, byte statusId, String status,
+
+	/*public Invoice(String id, int memberId, String tel, String address, String email) {
+		this(id, memberId, tel, address, email, Byte.MIN_VALUE, null, null);
+	}
+*/
+	public Invoice(int id, int memberId, String tel, String address, String email, byte statusId, String status,
 			Date date) {
 		this.id = id;
 		this.memberId = memberId;
@@ -33,19 +41,19 @@ public class Invoice {
 		this.date = date;
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public Long getMemberId() {
+	public int getMemberId() {
 		return memberId;
 	}
 
-	public void setMemberId(Long memberId) {
+	public void setMemberId(int memberId) {
 		this.memberId = memberId;
 	}
 

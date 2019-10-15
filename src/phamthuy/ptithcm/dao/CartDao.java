@@ -11,16 +11,15 @@ import phamthuy.ptithcm.model.Cart;
 
 public class CartDao extends AstractDao {
 	
-	public List<Cart> getCarts(String id) {
-		List<Cart> list = getJdbcTemplate().query("EXEC GetCarts ?", new CartMapper(), id);
+	public List<Cart> getCarts(int memberId) {
+		List<Cart> list = getJdbcTemplate().query("EXEC GetCarts ?", new CartMapper(), memberId);
 		return list;
 	}
 
 	public int add(Cart cart) {
-		return getJdbcTemplate().update("EXEC AddCart ?, ?, ?, ?", cart.getId(), cart.getMemberId(), cart.getProductId(),
+		return getJdbcTemplate().update("EXEC AddCart  ?, ?, ?", cart.getMemberId(), cart.getProductId(),
 				cart.getQuantity());
 	}
-	
 
 	public int delete(String cartID, int productID) {
 		return getJdbcTemplate().update("DELETE FROM CART WHERE CartId = ? AND ProductId=?", cartID, productID);

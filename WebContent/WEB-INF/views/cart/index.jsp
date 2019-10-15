@@ -5,6 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" charset="utf-8">
 <title>Insert title here</title>
+
+<script src="../js/jquery-1.9.1.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/css.css">
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
 </head>
 <body>
 	<table class="table table-bordered">

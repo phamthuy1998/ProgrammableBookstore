@@ -1,14 +1,14 @@
 package phamthuy.ptithcm.model;
 
 public class InvoiceDetail {
-	private String id;
+	private int id;
 	private int productId;
 	private short quantity;
 	private int price;
 	private String title;
 	private String imageUrl;
 
-	public InvoiceDetail(String id, int productId, short quantity, int price, String title, String imageUrl) {
+	public InvoiceDetail(int id, int productId, short quantity, int price, String title, String imageUrl) {
 		super();
 		this.id = id;
 		this.productId = productId;
@@ -22,11 +22,11 @@ public class InvoiceDetail {
 		super();
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
