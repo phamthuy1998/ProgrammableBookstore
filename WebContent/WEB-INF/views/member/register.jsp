@@ -17,7 +17,7 @@ span {
 <script src="../js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/css.css">
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
-<script>
+<%-- <script>
 	$(function() {
 		$("a[data-lang]").click(
 				function() {
@@ -40,13 +40,27 @@ span {
 					return false;
 				});
 	});
+</script> --%>
+
+<script>
+	$(function() {
+		$("a[data-lang]").click(function() {
+			var pathname = window.location.pathname;
+			/* alert(pathname); */
+			var lang = $(this).attr("data-lang");
+			$.get( pathname + "?language=" + lang , function() {
+				location.reload();
+			});
+			return false;
+		});
+	});
 </script>
 
 </head>
 <body class="body-login">
-
+	
 	<a href="#" data-lang="en"><s:message code="label.en" /></a> |
-	<a href="#" data-lang="vi"><s:message code="label.vi" /></a>
+	<a href="#" data-lang="vi"><s:message code="label.vi" /></a> 
 	<div class="login">
 		<div class="col-ms-8 mx-auto">
 
@@ -56,33 +70,35 @@ span {
 				<h1 class="center lb-login">
 					<s:message code="label.register" />
 				</h1>
-				<br>
 
 				<div>
 					<label><s:message code="label.username" /></label>
-					<form:input class="form-control" path="username" type="text" />
+					<form:input placeholder="User name" class="form-control"
+						type="text" path="username" />
 					<form:errors path="username" />
 				</div>
 
 				<div>
 					<label><s:message code="label.email" /></label>
-					<form:input class="form-control" path="email" type="email" />
+					<form:input type="email" class="form-control" placeholder="Email"
+						path="email" />
 					<form:errors path="email" />
 				</div>
 
 				<div>
 					<label><s:message code="label.password" /></label>
-					<form:input class="form-control" type="password" path="password" />
+					<form:input class="form-control" type="password"
+						placeholder="Password" path="password" />
 					<form:errors path="password" />
 				</div>
 
 				<div>
 					<label><s:message code="label.phone" /></label>
-					<form:input type="number" class="form-control" path="tel" />
+					<form:input type="number" class="form-control" placeholder="Phone"
+						path="tel" />
 					<form:errors path="tel" />
 				</div>
 
-				<br>
 
 				<div>
 					<label class="mr-2"><s:message code="label.gender" /></label> <input
@@ -90,10 +106,8 @@ span {
 					<s:message code="label.male" />
 					<input value="1" type="radio" name="gender" class="ml-3">
 					<s:message code="label.female" />
-					<br>
 				</div>
 
-				<br>
 
 				<div>
 					<button class="btn btn-primary btn-lg">
@@ -103,13 +117,9 @@ span {
 
 				<br>
 				<div class="center">
-					<a class="btn-register"
+					<a class="btn-register center" style="margin: 20"
 						href="${pageContext.request.contextPath}/user/login.htm"><s:message
-							code="label.login" /></a>
-				</div>
-				<br>
-				<div class="center">
-					<a class="btn-register"
+							code="label.login" /></a> <a class="btn-register "
 						href="${pageContext.request.contextPath}/user/forgot.htm"><s:message
 							code="label.forgotpassword" /></a>
 				</div>

@@ -72,10 +72,11 @@ public class Helper {
     
     public static boolean isValidPhone(String s) 
     { 
-        Pattern p = Pattern.compile("09|01|02|03|04|05|06|07|08)+([0-9]{7,11})\\b"); 
-  
-        Matcher m = p.matcher(s); 
-        return (m.find() && m.group().equals(s)); 
+        Pattern p = Pattern.compile("/((09|03|07|08|05)+([0-9]{8})\b)/g");
+        System.out.println("check: "+ p.matcher(s).matches());
+        if (s == null) 
+            return false; 
+        return p.matcher(s).matches(); 
     } 
 
 }

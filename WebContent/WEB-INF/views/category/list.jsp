@@ -7,8 +7,11 @@
 <title>Insert title here</title>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery-1.9.1.min.js">
-	
 </script>
+<script src="../js/jquery-1.9.1.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/css.css">
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#checkBoxAll').click(function() {
@@ -30,8 +33,8 @@
 		<input type="submit" value="Delete"
 			onclick="return confirm('Are you sure you want to delete these category?')" />
 		<br /> ${error} <br />
-		<table border="1" style="width: 100%" class="table">
-			<tr>
+		<table class="table table-hover border table-striped">
+			<tr class="thead-dark">
 				<th><input type="checkbox" id="checkBoxAll" /></th>
 				<th>Id</th>
 				<th>Name</th>

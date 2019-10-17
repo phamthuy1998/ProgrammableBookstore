@@ -1,5 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" pageEncoding="utf-8"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,26 +28,29 @@
 </head>
 <body>
 	<a href="${pageContext.request.contextPath}/admin/user/add.htm"
-		class="btn btnprimary">Add</a>
+		class="btn btnprimary"><s:message code="label.insert" /></a>
 	<div></div>
+	
 	<form method="post"
 		action="${pageContext.request.contextPath}/admin/user/dels.htm">
-
-		<input type="submit" value="Delete"
-			onclick="return confirm('Are you sure you want to delete these authors? \n${list.size()} item')" />
+		
+		<input type="submit" value="<s:message code="label.delete" />"
+			onclick="return confirm('Are you sure you want to delete these authors?')" />
+		
 		<br /> ${error} <br />
-		<table border="1" style="width: 100%" class="table">
-			<tr>
+		
+		<table class="table table-hover border table-striped">
+			<tr class="thead-dark">
 				<th><input type="checkbox" id="checkBoxAll" /></th>
-				<th>Id</th>
-				<th>User name</th>
-				<th>Password</th>
-				<th>Phone</th>
-				<th>Email</th>
-				<th>gender</th>
-				<th>Added date</th>
-				<th>Edit</th>
-				<th>Delete</th>
+				<th><s:message code="label.id" /></th>
+				<th><s:message code="label.username" /></th>
+				<th><s:message code="label.password" /></th>
+				<th><s:message code="label.phone" /></th>
+				<th><s:message code="label.email" /></th>
+				<th><s:message code="label.gender" /></th>
+				<th><s:message code="label.datecreate" /></th>
+				<th><s:message code="label.update" /></th>
+				<th><s:message code="label.delete" /></th>
 			</tr>
 			<c:forEach items="${list}" var="member">
 				<tr>
@@ -58,13 +63,13 @@
 					<td>${member.email}</td>
 					<td>${member.gender}</td>
 					<td>${member.addeddate}</td>
-					
+
 					<td><a
 						href="${pageContext.request.contextPath}/admin/user/edit/${member.id}.htm">
 							<img src="${pageContext.request.contextPath}/images/edit.png"
 							alt="Edit">
 					</a></td>
-					
+
 					<td><a
 						onclick="return confirm('Are you sure you want to delete ${member.username}?')"
 						href="${pageContext.request.contextPath}/admin/user/del/${member.id}.htm">

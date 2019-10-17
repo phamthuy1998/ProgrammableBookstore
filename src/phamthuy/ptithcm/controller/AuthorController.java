@@ -80,7 +80,6 @@ public class AuthorController {
 	public String edit(Model model, Author obj, @PathVariable("id") int id) {
 		System.out.println("vô đây hk ta");
 		authorDao.edit(obj);
-
 		return "redirect:/admin/authors.htm";
 	}
 }

@@ -27,7 +27,7 @@ public class InvoiceController {
 		System.out.println("vo check cart");
 		if (MemberController.memberLoginForm != null) {
 			if (MemberController.memberLoginForm.getId() != 0) {
-				model.addAttribute("list", cartDao.getCarts(MemberController.memberLoginForm.getId()));
+				//model.addAttribute("list", cartDao.getCarts(MemberController.memberLoginForm.getId()));
 				model.addAttribute("invoice", new Invoice());
 			} else {
 				return "redirect:/user/login.htm";

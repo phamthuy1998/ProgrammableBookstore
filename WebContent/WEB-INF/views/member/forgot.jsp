@@ -6,6 +6,12 @@
 <head>
 <meta http-equiv="Content-Type" charset="utf-8">
 <title>Sign In|Sign up</title>
+<style type="text/css">
+span {
+	color: red;
+	font-style: italic;
+}
+</style>
 <script src="../js/jquery-1.9.1.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/css.css">
@@ -14,17 +20,15 @@
 <body class="body-login">
 	<div class="login">
 		<div class="col-ms-8 mx-auto">
-			<form:form method="post" class="form-login" modelAttribute="email">
+			<form:form method="post" class="form-login" modelAttribute="member">
 				<h1 class="center lb-login">
 					<s:message code="label.forgotpassword" />
 				</h1>
-				
-${message}
 				<br>
 				<div>
-					<label><s:message code="label.email" /></label> <input
-						type="email" class="form-control"
-						placeholder="<s:message code="label.email" />" name="email">
+					<label><s:message code="label.email" /></label>
+					<form:input type="email" class="form-control" placeholder="Email" path="email" />
+					<form:errors path="email" />
 				</div>
 
 				<br>

@@ -10,7 +10,7 @@
 	<c:forEach var="o" items="${list}">
 		<div class="col-4">
 			<div class="item">
-				<img alt="${o.title}"  height="285" width="200"
+				<img alt="${pageContext.request.contextPath}/images/${o.id}.jpg"  height="285" width="200"
 					src="${o.imageUrl}">
 				<div class="info">
 					<a

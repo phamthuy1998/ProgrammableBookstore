@@ -26,6 +26,18 @@ body.body-login {
 	background-size: cover;
 }
 
+body.body-create-employee {
+	background:
+		url('https://s24842.pcdn.co/wp-content/uploads/2016/04/shutterstock_391911637.jpg')
+		fixed;
+	background-size: cover;
+	height: 100%;
+	/* Center and scale the image nicely */
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
 a {
 	text-decoration: none;
 	color: #337ab7;
@@ -113,7 +125,15 @@ form.form-check-out {
 }
 
 form.form-login {
-	background-color: rgba(255, 255, 255, 0.5);
+	background-color: rgba(255, 255, 255, 0.7);
+	padding: 50px;
+	width: 500px;
+	border-radius: 5px;
+}
+
+
+form.form-create-employee {
+	background-color: rgba(255, 255, 255, 0.9);
 	padding: 50px;
 	width: 500px;
 	border-radius: 5px;

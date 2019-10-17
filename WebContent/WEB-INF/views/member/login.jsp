@@ -6,54 +6,43 @@
 <head>
 <meta http-equiv="Content-Type" charset="utf-8">
 <title>Sign In|Sign up</title>
+<style type="text/css">
+span {
+	color: red;
+	font-style: italic;
+}
+</style>
 <script src="../js/jquery-1.9.1.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/css.css">
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
-<script>
-	$(function() {
-		$("a[data-lang]").click(
-				function() {
-					var lang = $(this).attr("data-lang");
-					$.get(
-							"${pageContext.request.contextPath}/user/register.htm?language="
-									+ lang, function() {
-								location.reload();
-							});
-					return false;
-				});
-	});
-</script>
 
 </head>
 <body class="body-login">
+	${message}
 	<div class="login">
 		<div class="col-ms-8 mx-auto">
 			<form:form method="post" class="form-login" modelAttribute="member">
 				<h1 class="center lb-login">
 					<s:message code="label.login" />
 				</h1>
-				<br> 
-				
+				<br>
+
 				<div>
-					<label><s:message code="label.emailorphone" /></label> <input
-						class="form-control" placeholder="<s:message code="label.emailorphone" />"
-						type="text" name="email">
+					<label><s:message code="label.emailorphone" /></label>
+					<form:input class="form-control" placeholder="Email" type="text" path="email" />
+					<form:errors path="email" />
 				</div>
 				<div>
-					<label><s:message code="label.password" /></label> <input
-						class="form-control"
-						placeholder="<s:message code="label.password" />" type="password"
-						name="password">
+					<label><s:message code="label.password" /></label>
+					<form:input class="form-control"  placeholder="Password" type="password" path="password" />
+					<form:errors path="password" />
 				</div>
-				<%-- <div>
-					<label> <input type="checkbox" name="remember" value="1">
-						<s:message code="label.rememberme" />
-					</label>
-				</div> --%>
-				<br>	
+				<br>
 				<div>
-					<button class="btn btn-lg btn-primary"><s:message code="label.login" /></button>
+					<button class="btn btn-lg btn-primary">
+						<s:message code="label.login" />
+					</button>
 				</div>
 				<br>
 				<div class="center">

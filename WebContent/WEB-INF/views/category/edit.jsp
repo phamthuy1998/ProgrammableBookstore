@@ -1,5 +1,5 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<form:form method="post" modelAttribute="obj" cssClass="form">
+<form:form method="post" modelAttribute="obj" Class="form">
 	<p>
 		<label>ID</label>
 		<form:input path="id" />

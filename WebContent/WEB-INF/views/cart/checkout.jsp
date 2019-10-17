@@ -24,7 +24,7 @@ span {
 	<h1 class="center lb-login">
 		<s:message code="label.checkout" />
 	</h1>
-
+<%-- 
 	<table class="table table-hover border table-striped">
 		<tr class="thead-dark">
 			<th>Title</th>
@@ -45,7 +45,7 @@ span {
 
 			</tr>
 		</c:forEach>
-	</table>
+	</table> --%>
 	<form:form modelAttribute="invoice" 
 		action="${pageContext.request.contextPath}/cart/checkout.htm"
 		class="form-login" style="margin:auto">

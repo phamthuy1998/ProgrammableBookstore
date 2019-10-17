@@ -12,6 +12,11 @@ public class Member {
 	private String tel;
 	
 	
+	public Member(String email) {
+		super();
+		this.email = email;
+	}
+
 	public Member() {
 		super();
 	}

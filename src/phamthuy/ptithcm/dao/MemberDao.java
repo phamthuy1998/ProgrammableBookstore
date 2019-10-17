@@ -14,10 +14,34 @@ import phamthuy.ptithcm.model.Member;
 import phamthuy.ptithcm.model.Role;
 
 public class MemberDao extends AstractDao {
-	
+
 	public List<Member> getAllMember() {
 		List<Member> list = getJdbcTemplate().query("SELECT * FROM Member", new MemberMapper());
 		return list;
+	}
+
+	public int delete(int id) {
+		return getJdbcTemplate()
+				.update("DELETE FROM MemberInRole WHERE MemberId = ? DELETE FROM Member WHERE MemberId = ?", id, id);
+	}
+
+	public int delete(List<Integer> list) {
+		for (Integer id : list) {
+			return getJdbcTemplate().update("DELETE FROM MemberInRole WHERE MemberId = ?  DELETE FROM Member WHERE MemberId = ?", id);
+		}
+		return 1;
+	}
+
+	public Member getMember(int id) {
+		return getJdbcTemplate().queryForObject("SELECT * FROM Member WHERE MemberId = ?", new MemberMapper(), id);
+
+	}
+
+	public int edit(Member member) {
+		String pass = Helper.bCrypt(member.getPassword());
+		return getJdbcTemplate().update(
+				"UPDATE Member SET Username = ?, Password =?, Email=?, Gender=?, Tel=? WHERE MemberId = ?",
+				member.getUsername(), pass, member.getEmail(), member.getGender(), member.getTel(), member.getId());
 	}
 
 	public int add(Member member) {
@@ -31,21 +55,38 @@ public class MemberDao extends AstractDao {
 			int id = getMemberIDByEmail(member.getEmail());
 			System.out.println("id user: " + id);
 			if (id != -1) {
-				int b = getJdbcTemplate().update("INSERT INTO MemberInRole(MemberId, RoleId) VALUES(?, ?)", id, 1);
+				int b = getJdbcTemplate().update("INSERT INTO MemberInRole(MemberId, RoleId) VALUES(?, ?)", id, 2);
+				return a + b;
+			}
+		}
+		return a;
+	}
+	
+	public int addEmployee(Member member) {
+		String pass = Helper.bCrypt(member.getPassword());
+		int a = getJdbcTemplate().update(
+				"INSERT INTO dbo.Member( Username ,Password ,Email ,Gender , Tel) VALUES(?,?,?,?,?)",
+				member.getUsername(), pass, member.getEmail(), member.getGender(), member.getTel());
+
+		System.out.println("so a: " + a);
+		if (a > 0) {
+			int id = getMemberIDByEmail(member.getEmail());
+			System.out.println("id user: " + id);
+			if (id != -1) {
+				int b = getJdbcTemplate().update("INSERT INTO MemberInRole(MemberId, RoleId) VALUES(?, ?)", id, 3);
 				return a + b;
 			}
 		}
 		return a;
 	}
 
+
 	public int updatePassword(String newPass, String email) {
 		String passbCrypt = Helper.bCrypt(newPass);
-		int a = getJdbcTemplate().update(
-				"UPDATE dbo.Member SET Password =? WHERE Email = ?",
-				passbCrypt, email);
+		int a = getJdbcTemplate().update("UPDATE dbo.Member SET Password =? WHERE Email = ?", passbCrypt, email);
 		return a;
 	}
-	
+
 	public int getMemberIDByEmail(String email) {
 		List<Member> listMember = getJdbcTemplate().query("SELECT * FROM dbo.Member WHERE Email = ?",
 				new MemberMapper(), email);
@@ -70,7 +111,7 @@ public class MemberDao extends AstractDao {
 		if (listMember.size() > 0) {
 			if (Helper.encryptionBCrypt(password, listMember.get(0).getPassword()) == true)
 				return listMember.get(0);
-			//sai mat khau
+			// sai mat khau
 			else
 				return null;
 		}
