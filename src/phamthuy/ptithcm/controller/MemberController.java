@@ -1,10 +1,14 @@
 package phamthuy.ptithcm.controller;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
@@ -18,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import phamthuy.ptit.helper.Helper;
 import phamthuy.ptithcm.dao.MemberDao;
-import phamthuy.ptithcm.model.Author;
 import phamthuy.ptithcm.model.Member;
 import phamthuy.ptithcm.model.Role;
 
@@ -69,8 +72,9 @@ public class MemberController {
 	@RequestMapping("admin/user/add")
 	public String add(Model model) {
 		model.addAttribute("member", new Member());
-		return "member/add";
+		return "member/add"; 
 	}
+	
 
 	@RequestMapping(value = "admin/user/add", method = RequestMethod.POST)
 	public String addMember(Model model, @ModelAttribute("member") Member member, BindingResult errors) {
@@ -84,7 +88,7 @@ public class MemberController {
 			errors.rejectValue("email", "member", "Vui lòng nhập email!");
 		} else if (memberDao.getMemberIDByEmail(member.getEmail()) != -1) {
 			errors.rejectValue("email", "member", "Email đã tồn tại!");
-		}else if (Helper.checkEmail(member.getEmail().trim())) {
+		} else if (Helper.checkEmail(member.getEmail().trim()) == false) {
 			errors.rejectValue("email", "member", "Email không hợp lệ!");
 		}
 
@@ -98,25 +102,21 @@ public class MemberController {
 			errors.rejectValue("tel", "member", "Vui lòng nhập số điện thoại!");
 		} else if (memberDao.getMemberIDByPhone(member.getTel()) != -1) {
 			errors.rejectValue("tel", "member", "Số điện thoại đã tồn tại!");
-		}else if (Helper.isValidPhone(member.getTel().trim())) {
+		} else if (Helper.isValidPhone(member.getTel().trim()) == false) {
 			errors.rejectValue("tel", "member", "Số điện thoại không hợp lệ!");
 		}
 
-		if (member.getTel().trim().equals("") && member.getPassword().trim().equals("")
-				&& member.getEmail().trim().equals("") && member.getUsername().trim().equals("")) {
+		if (Helper.checkEmail(member.getEmail().trim()) == false
+				|| memberDao.getMemberIDByEmail(member.getEmail()) != -1
+				|| Helper.isValidPhone(member.getTel().trim()) == false
+				|| memberDao.getMemberIDByPhone(member.getTel()) != -1 || member.getTel().trim().equals("")
+				|| member.getPassword().trim().equals("") || member.getEmail().trim().equals("")
+				|| member.getUsername().trim().equals("")) {
 			return "member/add";
 		} else {
-			System.out.println("member khac rong");
-
-			if (memberDao.getMemberIDByEmail(member.getEmail()) == -1
-					&& memberDao.getMemberIDByEmail(member.getTel()) == -1 && !member.getTel().trim().equals("")
-					&& !member.getPassword().trim().equals("") && !member.getEmail().trim().equals("")
-					&& !member.getUsername().trim().equals("")) {
-				memberDao.addEmployee(member);
-				return "redirect:/admin/users.htm";
-			}
+			memberDao.addEmployee(member);
+			return "member/add";
 		}
-		return "member/add";
 	}
 
 	// Edit author
@@ -129,7 +129,7 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "admin/user/edit", method = RequestMethod.POST)
-	public String edit(Model model,@ModelAttribute("member") Member member,  BindingResult errors) {
+	public String edit(Model model, @ModelAttribute("member") Member member, BindingResult errors) {
 		if (member.getUsername().trim().equals("")) {
 			System.out.println("user name rong");
 			errors.rejectValue("username", "member", "Vui lòng nhập tên người dùng!");
@@ -138,12 +138,15 @@ public class MemberController {
 		if (member.getEmail().trim().equals("")) {
 			System.out.println("mail name rong");
 			errors.rejectValue("email", "member", "Vui lòng nhập email!");
-		} else if (memberDao.getMemberIDByEmail(member.getEmail()) != -1) {
+		}
+		// mail da ton tai
+		else if (memberDao.getMemberIDByEmail(member.getEmail()) > 1) {
 			errors.rejectValue("email", "member", "Email đã tồn tại!");
-		}else if (Helper.checkEmail(member.getEmail().trim())) {
+		}
+		// mail k hop le
+		else if (Helper.checkEmail(member.getEmail().trim()) == false) {
 			errors.rejectValue("email", "member", "Email không hợp lệ!");
 		}
-
 
 		if (member.getPassword().trim().equals("")) {
 			System.out.println("pass name rong");
@@ -153,29 +156,26 @@ public class MemberController {
 		if (member.getTel().trim().equals("")) {
 			System.out.println("tel name rong");
 			errors.rejectValue("tel", "member", "Vui lòng nhập số điện thoại!");
-		} else if (memberDao.getMemberIDByPhone(member.getTel()) != -1) {
+		}
+		// so dt da ton tai
+		else if (memberDao.getMemberIDByPhone(member.getTel()) > 1) {
 			errors.rejectValue("tel", "member", "Số điện thoại đã tồn tại!");
-		}else if (Helper.isValidPhone(member.getTel().trim())) {
+		}
+		// so dt k hop le
+		else if (Helper.isValidPhone(member.getTel().trim()) == false) {
 			errors.rejectValue("tel", "member", "Số điện thoại không hợp lệ!");
 		}
 
-		if (member.getTel().trim().equals("") && member.getPassword().trim().equals("")
-				&& member.getEmail().trim().equals("") && member.getUsername().trim().equals("")) {
+		//
+		if (memberDao.getMemberIDByEmail(member.getEmail()) > 1 || memberDao.getMemberIDByPhone(member.getTel()) > 1
+				|| member.getTel().trim().equals("") || member.getPassword().trim().equals("")
+				|| member.getEmail().trim().equals("") || member.getUsername().trim().equals("")) {
 			return "member/edit";
-			
-		}else {
-			System.out.println("member khac rong");
 
-			if (memberDao.getMemberIDByEmail(member.getEmail()) == -1
-					&& memberDao.getMemberIDByEmail(member.getTel()) == -1 && !member.getTel().trim().equals("")
-					&& !member.getPassword().trim().equals("") && !member.getEmail().trim().equals("")
-					&& !member.getUsername().trim().equals("")) {
-				memberDao.edit(member);
-				return "redirect:/admin/users.htm";
-			}
+		} else {
+			memberDao.edit(member);
+			return "redirect:/admin/users.htm";
 		}
-		return "member/edit";
-		
 	}
 
 	@RequestMapping(value = "user/register")
@@ -186,50 +186,44 @@ public class MemberController {
 
 	@RequestMapping(value = "user/register", method = RequestMethod.POST)
 	public String register(Model model, @ModelAttribute("member") Member member, BindingResult errors) {
-
+		ResourceBundle labels = ResourceBundle.getBundle("login",LocaleContextHolder.getLocale());// );
+		
 		if (member.getUsername().trim().equals("")) {
-			System.out.println("user name rong");
-			errors.rejectValue("username", "member", "Vui lòng nhập tên người dùng!");
+			errors.rejectValue("username", "member", labels.getString("label.errNoName"));
 		}
 
 		if (member.getEmail().trim().equals("")) {
-			System.out.println("mail name rong");
 			errors.rejectValue("email", "member", "Vui lòng nhập email!");
 		} else if (memberDao.getMemberIDByEmail(member.getEmail()) != -1) {
 			errors.rejectValue("email", "member", "Email đã tồn tại");
-		}else if (Helper.checkEmail(member.getEmail().trim())) {
+		} else if (Helper.checkEmail(member.getEmail().trim()) == false) {
 			errors.rejectValue("email", "member", "Email không hợp lệ!");
-		}
+		} 
 
 		if (member.getPassword().trim().equals("")) {
-			System.out.println("pass name rong");
 			errors.rejectValue("password", "member", "Vui lòng nhập mật khẩu!");
+		} else if (Helper.checkPassword(member.getPassword().trim()) == false) {
+			errors.rejectValue("password", "member", "Mật khẩu không hợp lệ, mật khẩu chỉ gồm a-z, A-Z, 0-9!");
 		}
 
 		if (member.getTel().trim().equals("")) {
-			System.out.println("tel name rong");
 			errors.rejectValue("tel", "member", "Vui lòng nhập số điện thoại!");
 		} else if (memberDao.getMemberIDByPhone(member.getTel()) != -1) {
 			errors.rejectValue("tel", "member", "Số điện thoại đã tồn tại!");
-		}else if(Helper.isValidPhone(member.getTel().trim())==false){
-			errors.rejectValue("tel", "member", "");
+		} else if (Helper.isValidPhone(member.getTel().trim()) == false) {
+			errors.rejectValue("tel", "member", "Số điện thoại không hợp lệ");
 		}
 
-		if (member.getTel().trim().equals("") || member.getPassword().trim().equals("")
-				|| member.getEmail().trim().equals("") || member.getUsername().trim().equals("")) {
+		if (Helper.isValidPhone(member.getTel().trim()) == false || Helper.checkEmail(member.getEmail().trim()) == false
+				|| memberDao.getMemberIDByEmail(member.getTel()) != -1
+				|| memberDao.getMemberIDByEmail(member.getEmail()) != -1 || member.getTel().trim().equals("")
+				|| member.getPassword().trim().equals("") || member.getEmail().trim().equals("")
+				|| member.getUsername().trim().equals("")) {
 			return "member/register";
 		} else {
-			System.out.println("member khac rong");
-
-			if (memberDao.getMemberIDByEmail(member.getEmail()) == -1
-					&& memberDao.getMemberIDByEmail(member.getTel()) == -1 && !member.getTel().trim().equals("")
-					&& !member.getPassword().trim().equals("") && !member.getEmail().trim().equals("")
-					&& !member.getUsername().trim().equals("")) {
-				memberDao.add(member);
-				return "redirect:/user/login.htm";
-			}
+			memberDao.add(member);
+			return "redirect:/user/login.htm";
 		}
-		return "member/register";
 	}
 
 	@RequestMapping(value = "user/login", method = RequestMethod.GET)
@@ -246,7 +240,7 @@ public class MemberController {
 		if (member.getEmail().trim().equals("")) {
 			System.out.println("email login rong");
 			errors.rejectValue("email", "member", "Vui lòng nhập email!");
-		}else if (Helper.checkEmail(member.getEmail().trim())) {
+		} else if (Helper.checkEmail(member.getEmail().trim()) == false) {
 			errors.rejectValue("email", "member", "Email không hợp lệ!");
 		}
 
@@ -255,7 +249,8 @@ public class MemberController {
 			errors.rejectValue("password", "member", "Vui lòng nhập password!");
 		}
 		// login
-		if (member.getEmail().trim().equals("") && member.getPassword().trim().equals("")) {
+		if (Helper.checkEmail(member.getEmail().trim()) == false || member.getEmail().trim().equals("")
+				|| member.getPassword().trim().equals("")) {
 			return "member/login";
 		} else {
 			if (memberDao.getMemberIDByEmail(member.getEmail()) != -1
@@ -273,14 +268,12 @@ public class MemberController {
 				} else {
 					System.out.println("dang nhap that bai");
 					errors.rejectValue("password", "member", "Mật khẩu không đúng!");
-					// return "member/login";
 				}
 
 			}
 			// email password k ton tai
 			else {
 				errors.rejectValue("email", "member", "Email   không tồn tại trong hệ thống!");
-				// return "member/login";
 			}
 		}
 
@@ -298,12 +291,10 @@ public class MemberController {
 		if (member.getEmail().trim().equals("")) {
 			System.out.println("mail forgot rong");
 			errors.rejectValue("email", "member", "Vui lòng nhập email!");
-			// return "member/forgot";
-		} else if (Helper.checkEmail(member.getEmail().trim())) {
+		} else if (Helper.checkEmail(member.getEmail().trim()) == false) {
 			errors.rejectValue("email", "member", "Email không hợp lệ!");
-		}else if (memberDao.getMemberIDByEmail(member.getEmail()) == -1) {
+		} else if (memberDao.getMemberIDByEmail(member.getEmail()) == -1) {
 			errors.rejectValue("email", "member", "Email chưa tạo tài khoản trong hệ thống");
-			// return "member/forgot";
 		} else {
 			System.out.println("mail forgot :" + member.getEmail());
 			try { // Tạo mail

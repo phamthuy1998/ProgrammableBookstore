@@ -14,6 +14,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/css.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 
+
 </head>
 <body>
 	<form class="form-search" method="get"

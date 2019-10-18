@@ -25,7 +25,7 @@ public class Helper {
 			sb.append(ALPHABET.charAt(RANDOM.nextInt(ALPHABET.length())));
 		return Long.parseLong(sb.toString());
 	}
-	
+
 	public static String randomPassword() {
 		String ALPHABET = "0123456789";
 		SecureRandom RANDOM = new SecureRandom();
@@ -45,38 +45,39 @@ public class Helper {
 	public static boolean encryptionBCrypt(String password, String getPass) {
 		return BCrypt.checkpw(password, getPass);
 	}
-	
 
-    public static boolean checkEmail(String email) 
-    { 
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+ 
-                            "[a-zA-Z0-9_+&*-]+)*@" + 
-                            "(?:[a-zA-Z0-9-]+\\.)+[a-z" + 
-                            "A-Z]{2,7}$"; 
-                              
-        Pattern pat = Pattern.compile(emailRegex); 
-        if (email == null) 
-            return false; 
-        return pat.matcher(email).matches(); 
-    }
-    
-    public static boolean checkPassword(String password) 
-    { 
-        String passRegex = "^(?=.*[a-z])(?!.* )(?=.*[0-9]).{6,}$"; 
-                              
-        Pattern pat = Pattern.compile(passRegex); 
-        if (password == null) 
-            return false; 
-        return pat.matcher(password).matches(); 
-    }
-    
-    public static boolean isValidPhone(String s) 
-    { 
-        Pattern p = Pattern.compile("/((09|03|07|08|05)+([0-9]{8})\b)/g");
-        System.out.println("check: "+ p.matcher(s).matches());
-        if (s == null) 
-            return false; 
-        return p.matcher(s).matches(); 
-    } 
+	public static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
+			Pattern.CASE_INSENSITIVE);
+
+	public static boolean checkEmail(String emailStr) {
+		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
+		return matcher.find();
+	}
+	/*
+	 * public static boolean checkEmail(String email) { String emailRegex =
+	 * "^[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@" +
+	 * "(?:[a-zA-Z0-9-]+\\.)+[a-z" + "A-Z]{2,7}$";
+	 * 
+	 * Pattern pat = Pattern.compile(emailRegex); if (email == null) return
+	 * false; return pat.matcher(email).matches(); }
+	 */
+
+	public static boolean checkPassword(String password) {
+		String passRegex = "^(?=.*[a-z])(?!.* )(?=.*[0-9]).{6,}$";
+
+		Pattern pat = Pattern.compile(passRegex);
+		if (password == null || password.length() < 6)
+			return false;
+		return pat.matcher(password).matches();
+	}
+
+	///((09|03|07|08|05)+([0-9]{8})\b)/g
+	public static boolean isValidPhone(String s) {
+		Pattern p = Pattern.compile("(09|01|02|03|04|05|06|07|08)+([0-9]{7,11})\\b");
+		System.out.println("check: " + p.matcher(s).matches());
+		if (s == null)
+			return false;
+		return p.matcher(s).matches();
+	}
 
 }

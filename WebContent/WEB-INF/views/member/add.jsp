@@ -15,11 +15,13 @@ span {
 </style>
 <script src="${pageContext.request.contextPath}/js/jquery-1.9.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/css.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/css.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 
 </head>
-<body class="body-create-employee" >
+<body class="body-create-employee">
 
 	<div class="login">
 		<div class="col-ms-8 mx-auto">
@@ -34,25 +36,29 @@ span {
 
 				<div>
 					<label><s:message code="label.username" /></label>
-					<form:input  placeholder="User name" class="form-control" type="text" path="username" />
+					<form:input placeholder="User name" class="form-control"
+						type="text" path="username" />
 					<form:errors path="username" />
 				</div>
 
 				<div>
 					<label><s:message code="label.email" /></label>
-					<form:input type="email" class="form-control"  placeholder="Email" path="email" />
+					<form:input type="email" class="form-control" placeholder="Email"
+						path="email" />
 					<form:errors path="email" />
 				</div>
 
 				<div>
 					<label><s:message code="label.password" /></label>
-					<form:input class="form-control" type="password" placeholder="Password" path="password" />
+					<form:input class="form-control" type="password"
+						placeholder="Password" path="password" />
 					<form:errors path="password" />
 				</div>
 
 				<div>
 					<label><s:message code="label.phone" /></label>
-					<form:input type="number" class="form-control" placeholder="Phone" path="tel" />
+					<form:input type="number" class="form-control" placeholder="Phone"
+						path="tel" />
 					<form:errors path="tel" />
 				</div>
 
@@ -71,8 +77,20 @@ span {
 
 				<div>
 					<button class="btn btn-primary btn-lg">
-						<s:message code="label.register" />
+						<s:message code="label.createacc" />
 					</button>
+				</div>
+
+				<br>
+
+				<div class="center">
+					<a class="btn btn-outline-success"
+						href="${pageContext.request.contextPath}/admin/user/add.htm">
+						<s:message code="label.rewrite" />
+					</a> <a href="${pageContext.request.contextPath}/admin/users.htm"
+						class="btn btn-outline-danger"> <s:message
+							code="label.cancel" />
+					</a>
 				</div>
 
 				<br>

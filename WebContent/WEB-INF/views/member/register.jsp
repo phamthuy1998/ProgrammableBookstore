@@ -48,7 +48,7 @@ span {
 			var pathname = window.location.pathname;
 			/* alert(pathname); */
 			var lang = $(this).attr("data-lang");
-			$.get( pathname + "?language=" + lang , function() {
+			$.get(pathname + "?language=" + lang, function() {
 				location.reload();
 			});
 			return false;
@@ -58,9 +58,9 @@ span {
 
 </head>
 <body class="body-login">
-	
+
 	<a href="#" data-lang="en"><s:message code="label.en" /></a> |
-	<a href="#" data-lang="vi"><s:message code="label.vi" /></a> 
+	<a href="#" data-lang="vi"><s:message code="label.vi" /></a>
 	<div class="login">
 		<div class="col-ms-8 mx-auto">
 

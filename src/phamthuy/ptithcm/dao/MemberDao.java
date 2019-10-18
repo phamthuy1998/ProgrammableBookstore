@@ -52,7 +52,7 @@ public class MemberDao extends AstractDao {
 
 		System.out.println("so a: " + a);
 		if (a > 0) {
-			int id = getMemberIDByEmail(member.getEmail());
+			int id = getMemberIDMail(member.getEmail());
 			System.out.println("id user: " + id);
 			if (id != -1) {
 				int b = getJdbcTemplate().update("INSERT INTO MemberInRole(MemberId, RoleId) VALUES(?, ?)", id, 2);
@@ -70,7 +70,7 @@ public class MemberDao extends AstractDao {
 
 		System.out.println("so a: " + a);
 		if (a > 0) {
-			int id = getMemberIDByEmail(member.getEmail());
+			int id = getMemberIDMail(member.getEmail());
 			System.out.println("id user: " + id);
 			if (id != -1) {
 				int b = getJdbcTemplate().update("INSERT INTO MemberInRole(MemberId, RoleId) VALUES(?, ?)", id, 3);
@@ -91,16 +91,25 @@ public class MemberDao extends AstractDao {
 		List<Member> listMember = getJdbcTemplate().query("SELECT * FROM dbo.Member WHERE Email = ?",
 				new MemberMapper(), email);
 		if (listMember.size() > 0) {
-			return listMember.get(0).getId();
+			return listMember.size();
 		}
 		return -1;
 	}
 
+	public int getMemberIDMail(String email) {
+		List<Member> listMember = getJdbcTemplate().query("SELECT * FROM dbo.Member WHERE Email = ?",
+				new MemberMapper(), email);
+		if (listMember.size() > 0) {
+			return listMember.get(0).getId();
+		}
+		return -1;
+	}
+	
 	public int getMemberIDByPhone(String phone) {
 		List<Member> listMember = getJdbcTemplate().query("SELECT * FROM dbo.Member WHERE Tel = ?", new MemberMapper(),
 				phone);
 		if (listMember.size() > 0) {
-			return listMember.get(0).getId();
+			return listMember.size();
 		}
 		return -1;
 	}
