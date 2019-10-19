@@ -5,8 +5,8 @@
 
 <html>
 <head>
-<meta http-equiv="Content-Type" charset="utf-8">
-<title>Sign In|Sign up</title>
+<meta charset="utf-8">
+<title><s:message code="label.register" /></title>
 <style type="text/css">
 span {
 	color: red;

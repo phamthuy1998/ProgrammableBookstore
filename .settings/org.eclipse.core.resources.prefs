@@ -3,6 +3,7 @@ encoding//i18n-res/login_vi.properties=UTF-8
 encoding//src/phamthuy/ptit/helper/Helper.java=UTF-8
 encoding//src/phamthuy/ptithcm/controller/AuthorController.java=UTF-8
 encoding//src/phamthuy/ptithcm/controller/CartController.java=UTF-8
+encoding//src/phamthuy/ptithcm/controller/CategoryController.java=UTF-8
 encoding//src/phamthuy/ptithcm/controller/InvoiceController.java=UTF-8
 encoding//src/phamthuy/ptithcm/controller/MemberController.java=UTF-8
 encoding//src/phamthuy/ptithcm/dao/AstractDao.java=UTF-8

@@ -1,5 +1,7 @@
 package phamthuy.ptithcm.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Controller;
@@ -23,20 +25,41 @@ public class InvoiceController {
 	CartDao cartDao = new CartDao();
 
 	@RequestMapping(value = "checkout")
-	public String checkout(Model model) {
-		System.out.println("vo check cart");
-		if (MemberController.memberLoginForm != null) {
-			if (MemberController.memberLoginForm.getId() != 0) {
-				//model.addAttribute("list", cartDao.getCarts(MemberController.memberLoginForm.getId()));
-				model.addAttribute("invoice", new Invoice());
-			} else {
-				return "redirect:/user/login.htm";
+	public String checkout(Model model, HttpServletRequest request) {
+		// get user's infor from cookie
+		String userID = null, role = null;
+		for (Cookie cookie : request.getCookies()) {
+			if (cookie.getName().equals("userID")) {
+				userID = cookie.getValue();
 			}
-		} else {
-			return "redirect:/user/login.htm";
+			if (cookie.getName().equals("userRole")) {
+				role = cookie.getValue();
+			}
 		}
 
-		return "cart/checkout";
+		if (userID != null) {
+			// admin
+			if (Integer.parseInt(role) == 1) {
+				return "redirect:/home/products/1.htm";
+			}
+			// Member
+			else if (Integer.parseInt(role) == 2) {
+				model.addAttribute("invoice", new Invoice());
+				return "cart/checkout";
+			}
+			// employee
+			else if (Integer.parseInt(role) == 3) {
+				return "redirect:/home/products/1.htm";
+			}
+			// not login
+			else {
+				return "redirect:/user/login.htm";
+			}
+		}
+		// not login
+		else {
+			return "redirect:/user/login.htm";
+		}
 	}
 
 	@RequestMapping(value = "checkout", method = RequestMethod.POST)

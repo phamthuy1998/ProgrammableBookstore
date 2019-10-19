@@ -1,5 +1,6 @@
 package phamthuy.ptithcm.controller;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -32,40 +33,75 @@ public class CartController {
 
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public String add(Model model, Cart cart, HttpServletRequest request, HttpServletResponse response) {
-		if (MemberController.memberLoginForm != null) {
-			if (MemberController.memberLoginForm.getId() != 0) {
-				System.out.println("co vo day");
-
-				System.out.println("id product: " + cart.getProductId());
-				System.out.println("id quan: " + cart.getQuantity());
-				System.out.println("id member: " + cart.getMemberId());
-				cart.setMemberId(MemberController.memberLoginForm.getId());
-				cartDao.add(cart);
-				model.addAttribute("list", cartDao.getCarts(MemberController.memberLoginForm.getId()));
-			} else {
-				return "redirect:/user/login.htm";
+		
+		//get user's infor from cookie
+		String userID = null, role = null;
+		for (Cookie cookie : request.getCookies()) {
+			if (cookie.getName().equals("userID")) {
+				userID = cookie.getValue();
 			}
-		} else {
-			return "redirect:/user/login.htm";
+			if (cookie.getName().equals("userRole")) {
+				role = cookie.getValue();
+			}
 		}
 
-		return "redirect:index.htm";
+		if (userID != null) {
+			// admin
+			if (Integer.parseInt(role) == 1) {
+				return "redirect:/home/products/1.htm";
+			}
+			// Member
+			else if (Integer.parseInt(role) == 2) {
+				cart.setMemberId(Integer.parseInt(userID));
+				cartDao.add(cart);
+				model.addAttribute("list", cartDao.getCarts(MemberController.memberLoginForm.getId()));
+				return "redirect:/cart/index.htm";
+			}
+			// employee
+			else if (Integer.parseInt(role) == 3) {
+				return "redirect:/home/products/1.htm";
+			}
+			// not login
+			else {
+				return "redirect:/user/login.htm";
+			}
+		}
+		// not login
+		else {
+			return "redirect:/user/login.htm";
+		}
 	}
 
 	@RequestMapping("index")
-	public String index(Model model) {
-		model.addAttribute("title", "Your Cart");
-		System.out.println("goi index");
-		if (MemberController.memberLoginForm != null) {
-			if (MemberController.memberLoginForm.getId() != 0) {
+	public String index(Model model, HttpServletRequest request) {
+		String userID = null, role = null;
+		for (Cookie cookie : request.getCookies()) {
+			if (cookie.getName().equals("userID")) {
+				userID = cookie.getValue();
+			}
+			if (cookie.getName().equals("userRole")) {
+				role = cookie.getValue();
+			}
+		}
+
+		if (userID != null) {
+			// member
+			if (Integer.parseInt(role) == 2) {
 				model.addAttribute("list", cartDao.getCarts(MemberController.memberLoginForm.getId()));
-			} else {
+				return "cart/index";
+			}
+			// admin or employee
+			else if (Integer.parseInt(role) == 1 || Integer.parseInt(role) == 3) {
+				return "redirect:/home/products/1.htm";
+			}
+			// not exist
+			else {
 				return "redirect:/user/login.htm";
 			}
 		} else {
 			return "redirect:/user/login.htm";
 		}
-		return "cart/index";
+
 	}
 
 }

@@ -15,10 +15,11 @@
 	<!-- Spring MVC Annotation -->
 	<context:annotation-config />
 	<mvc:annotation-driven />
-
 	<bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		
 		<property name="defaultEncoding" value="UTF-8" />
+		
 		<property name="basenames">
 			<list>
 				<value>classpath:login</value>

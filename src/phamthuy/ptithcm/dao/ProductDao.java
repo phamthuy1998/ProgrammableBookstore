@@ -19,12 +19,16 @@ public class ProductDao extends AstractDao {
 		});
 	}
 
-	public List<Product> getProducts() {
-		List<Product> list = getJdbcTemplate().query("SELECT * FROM Product", new ProductMapper());
-		return list;
+	public int delete(int id) {
+		return getJdbcTemplate().update("DELETE FROM Product WHERE ProductId = ?", id);
 	}
 
-	public List<Product> getProducts(int index, int size) {
+/*	public List<Product> getProducts() {
+		List<Product> list = getJdbcTemplate().query("SELECT * FROM Product", new ProductMapper());
+		return list;
+	}*/
+
+	public List<Product> getProducts(Integer index, Integer size) {
 		return getJdbcTemplate().query(
 				"select * from Product order by productid asc offset ? row fetch next ? row only",
 				new RowMapper<Product>() {
@@ -33,19 +37,29 @@ public class ProductDao extends AstractDao {
 						return new Product(rs.getInt("ProductId"), rs.getString("Title"), rs.getString("ISBN"),
 								rs.getInt("Price"), rs.getString("Pages"), rs.getString("ImageUrl"));
 					}
-				},(index - 1) * size, size);
+				}, (index - 1) * size, size);
+	}
+
+	// get all list product
+	public List<Product> getAllProducts() {
+		return getJdbcTemplate().query("select * from Product ", new RowMapper<Product>() {
+			@Override
+			public Product mapRow(ResultSet rs, int numRow) throws SQLException {
+				return new Product(rs.getInt("ProductId"), rs.getString("Title"), rs.getString("ISBN"),
+						rs.getInt("Price"), rs.getString("Pages"), rs.getString("ImageUrl"));
+			}
+		});
 	}
 
 	public Product getProduct(int id) {
 
-		return getJdbcTemplate().queryForObject("SELECT * FROM Product WHERE ProductId = ?",
-				new RowMapper<Product>() {
-					@Override
-					public Product mapRow(ResultSet rs, int arg1) throws SQLException {
-						return new Product(rs.getInt("ProductId"), rs.getString("Title"), rs.getString("ISBN"),
-								rs.getInt("Price"), rs.getString("Pages"), rs.getString("ImageUrl"));
-					}
-				}, id);
+		return getJdbcTemplate().queryForObject("SELECT * FROM Product WHERE ProductId = ?", new RowMapper<Product>() {
+			@Override
+			public Product mapRow(ResultSet rs, int arg1) throws SQLException {
+				return new Product(rs.getInt("ProductId"), rs.getString("Title"), rs.getString("ISBN"),
+						rs.getInt("Price"), rs.getString("Pages"), rs.getString("ImageUrl"));
+			}
+		}, id);
 
 	}
 

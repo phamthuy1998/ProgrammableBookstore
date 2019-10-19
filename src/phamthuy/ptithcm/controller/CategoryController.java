@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,9 +43,15 @@ public class CategoryController {
 	}
 
 	@RequestMapping(value = "admin/category/add", method = RequestMethod.POST)
-	public String add(Model model, Category obj) {
-		categoryDao.add(obj);
-		return "redirect:/admin/categories.htm";
+	public String add(Model model, @ModelAttribute("obj") Category obj, BindingResult errors) {
+		if (obj.getName().equals("")) {
+			errors.rejectValue("name", "obj", "Vui lòng nhập tên sách!");
+
+		} else {
+			categoryDao.add(obj);
+			return "redirect:/admin/categories.htm";
+		}
+		return "category/add";
 	}
 
 	@RequestMapping("admin/category/edit/{id}")
@@ -59,9 +67,15 @@ public class CategoryController {
 	}
 
 	@RequestMapping(value = "admin/category/edit/{id}", method = RequestMethod.POST)
-	public String edit(Model model, Category obj, @PathVariable("id") int id) {
-		categoryDao.edit(obj);
-		return "redirect:/admin/categories.htm";
+	public String edit(Model model, @ModelAttribute("obj") Category obj, BindingResult errors) {
+		if (obj.getName().equals("")) {
+			errors.rejectValue("name", "obj", "Vui lòng nhập tên sách!");
+
+		} else {
+			categoryDao.edit(obj);
+			return "redirect:/admin/categories.htm";
+		}
+		return "category/edit";
 	}
 
 	// Del category

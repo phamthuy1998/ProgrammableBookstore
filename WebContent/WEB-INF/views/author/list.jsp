@@ -37,7 +37,7 @@ span {
 		action="${pageContext.request.contextPath}/admin/author/dels.htm">
 
 		<input type="submit" value="Delete"
-			onclick="return confirm('Are you sure you want to delete these authors? \n${list.size()} item')" />
+			onclick="return confirm('Are you sure you want to delete these authors?')" />
 		<br /> ${error} <br />
 		<table class="table table-hover border table-striped">
 			<tr class="thead-dark">

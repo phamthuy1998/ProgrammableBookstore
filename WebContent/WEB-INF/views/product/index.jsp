@@ -11,8 +11,10 @@
 
 <script src="${pageContext.request.contextPath}/js/jquery-1.9.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/css.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/css.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 
 
 </head>
@@ -27,7 +29,7 @@
 			<div class="col-4">
 				<div class="item">
 					<img class="img-product" alt="${o.title}"
-						src="${pageContext.request.contextPath}/images/${o.id}.jpg">
+						src="${pageContext.request.contextPath}/images/${o.imageUrl}.jpg">
 					<div class="info">
 						<a
 							href="${pageContext.request.contextPath}/home/product/detail/${o.id}.htm">${o.title}</a>

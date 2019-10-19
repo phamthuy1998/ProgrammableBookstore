@@ -21,22 +21,22 @@
 			<th>Delete</th>
 		</tr>
 		<c:forEach items="${list}" var="o">
-		
+
 			<tr>
 				<td>${o.title}</td>
 
 
 				<td>
-					<button class="btn_minus">-</button>
-					 <input
-					value="${o.quantity}" class="${o.productId}">
-					
+					<button class="btn_minus">-</button> <input value="${o.quantity}"
+					class="${o.productId}">
+
 					<button class="btn_plus">+</button>
 				</td>
 
 				<td>${o.price}</td>
 
-				<td><img width="70px" src="${o.imageUrl}"></td>
+				<td><img width="70px"
+					src="${pageContext.request.contextPath}/images/${o.imageUrl}.jpg"></td>
 
 				<td><a
 					onclick="return confirm('Are you sure you want to delete this ${o.title} from cart?')"

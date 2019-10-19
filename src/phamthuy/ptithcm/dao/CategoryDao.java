@@ -10,9 +10,11 @@ import phamthuy.ptithcm.mapper.CategoryMapper;
 import phamthuy.ptithcm.model.Category;
 
 public class CategoryDao extends AstractDao {
+	
+//	add new category
 	public int add(Category category) {
-		return getJdbcTemplate().update("INSERT INTO Category(CategoryId, CategoryName, ParentId) VALUES(?, ?, ?)",
-				category.getId(), category.getName(), category.getParent());
+		return getJdbcTemplate().update("INSERT INTO Category( CategoryName, ParentId) VALUES(?, ?)",
+				category.getName(), category.getParent());
 	}
 
 	public List<Category> getAllCategory() {
@@ -35,7 +37,6 @@ public class CategoryDao extends AstractDao {
 		return getJdbcTemplate().update("UPDATE Category SET CategoryName = ? , ParentId = ?  WHERE CategoryId = ?",
 				category.getName(), category.getParent(), category.getId());
 	}
-	
 
 	public int delete(int id) {
 		return getJdbcTemplate().update("DELETE FROM Category WHERE CategoryId = ?", id);

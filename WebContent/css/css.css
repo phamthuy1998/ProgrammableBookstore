@@ -1,3 +1,5 @@
+
+
 body {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 14px;
@@ -10,13 +12,25 @@ body {
 .img-product {
 	width: auto;
 	height:auto
-	max-height: 400px;
+	max-height: 100px;
 }
 
 
 body.body-login {
 	background:
 		url('https://stamma.org/sites/default/files/styles/lead_image_desktop/public/fields/lead_image/Resources_library_books.jpg?itok=Yj1l-cAs')
+		fixed;
+	background-size: cover;
+	height: 100%;
+	/* Center and scale the image nicely */
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+body.body-auth {
+	background:
+		url('https://st3.depositphotos.com/1346781/16452/i/1600/depositphotos_164525426-stock-photo-new-and-old-books-on.jpg')
 		fixed;
 	background-size: cover;
 	height: 100%;
@@ -134,6 +148,13 @@ form.form-login {
 
 form.form-create-employee {
 	background-color: rgba(255, 255, 255, 0.9);
+	padding: 50px;
+	width: 500px;
+	border-radius: 5px;
+}
+
+form.form-add-author {
+	background-color: rgba(255, 255, 255, 1);
 	padding: 50px;
 	width: 500px;
 	border-radius: 5px;

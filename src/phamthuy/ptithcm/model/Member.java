@@ -3,7 +3,7 @@ package phamthuy.ptithcm.model;
 import java.util.Date;
 
 public class Member {
-	private int id;
+	private Integer id;
 	private String username;
 	private String password;
 	private String email;
@@ -41,7 +41,7 @@ public class Member {
 	}
 
 
-	public Member(int id, String username, String password, String email, int gender, Date addeddate, String tel) {
+	public Member(Integer id, String username, String password, String email, int gender, Date addeddate, String tel) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -63,10 +63,10 @@ public class Member {
 	}
 
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getUsername() {

@@ -17,8 +17,7 @@ public class AuthorDao extends AstractDao {
 	}
 
 	public int insert(Author author) {
-		return getJdbcTemplate().update("insert into author(authorid,AuthorName) values(?,?)", author.getId(),
-				author.getName());
+		return getJdbcTemplate().update("insert into author(AuthorName) values(?)", author.getName());
 	}
 
 	public int delete(int id) {
