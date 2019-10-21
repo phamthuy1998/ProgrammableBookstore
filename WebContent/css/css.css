@@ -1,5 +1,3 @@
-
-
 body {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 14px;
@@ -11,14 +9,24 @@ body {
 
 .img-product {
 	width: auto;
-	height:auto
-	max-height: 100px;
+	height: auto max-height: 100px;
 }
-
 
 body.body-login {
 	background:
 		url('https://stamma.org/sites/default/files/styles/lead_image_desktop/public/fields/lead_image/Resources_library_books.jpg?itok=Yj1l-cAs')
+		fixed;
+	background-size: cover;
+	height: 100%;
+	/* Center and scale the image nicely */
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+body.body-edit-user {
+	background:
+		url('https://ak0.picdn.net/shutterstock/videos/32270260/thumb/4.jpg')
 		fixed;
 	background-size: cover;
 	height: 100%;
@@ -144,7 +152,6 @@ form.form-login {
 	width: 500px;
 	border-radius: 5px;
 }
-
 
 form.form-create-employee {
 	background-color: rgba(255, 255, 255, 0.9);
@@ -387,31 +394,41 @@ form.form-add-author {
 
 
 
+
+
 :not
 
 
+
  
+
 
 
 (
 :disabled
 
 
+
  
+
 
 
 )
 :not
 
 
+
  
+
 
 
 (
 .disabled
 
 
+
  
+
 
 
 )
@@ -421,13 +438,19 @@ cursor
 
 
 
+
+
 :
+
 
 
  
 
 
+
 pointer
+
+
 
 
 
@@ -760,31 +783,41 @@ a.btn.disabled, fieldset:disabled a.btn {
 
 
 
+
+
 :not
 
 
+
  
+
 
 
 (
 :disabled
 
 
+
  
+
 
 
 )
 :not
 
 
+
  
+
 
 
 (
 .disabled
 
 
+
  
+
 
 
 )
@@ -794,13 +827,19 @@ cursor
 
 
 
+
+
 :
+
 
 
  
 
 
+
 pointer
+
+
 
 
 

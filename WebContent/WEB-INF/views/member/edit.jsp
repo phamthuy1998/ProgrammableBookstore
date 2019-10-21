@@ -50,7 +50,7 @@ span {
 		</div>
 
 		<div>
-			<label><s:message code="label.password" /></label> <input
+			<label><s:message code="label.password" /></label> <input type="password"
 				class="form-control" name="password" path="password"
 				value="${member.password}">
 			<form:errors path="password" />

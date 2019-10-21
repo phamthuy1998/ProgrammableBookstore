@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -18,39 +19,24 @@ import phamthuy.ptithcm.model.Invoice;
 
 @Transactional
 @Controller
-@RequestMapping("cart")
 public class InvoiceController {
 
 	InvoiceDao invoiceDao = new InvoiceDao();
 	CartDao cartDao = new CartDao();
 
-	@RequestMapping(value = "checkout")
+	@RequestMapping(value = "cart/checkout")
 	public String checkout(Model model, HttpServletRequest request) {
-		// get user's infor from cookie
-		String userID = null, role = null;
-		for (Cookie cookie : request.getCookies()) {
-			if (cookie.getName().equals("userID")) {
-				userID = cookie.getValue();
-			}
-			if (cookie.getName().equals("userRole")) {
-				role = cookie.getValue();
-			}
-		}
-
-		if (userID != null) {
+		if (MemberController.memberLoginForm != null) {
 			// admin
-			if (Integer.parseInt(role) == 1) {
+			if (MemberController.roleLoginForm.getId() == 1 || MemberController.roleLoginForm.getId() == 3) {
 				return "redirect:/home/products/1.htm";
 			}
 			// Member
-			else if (Integer.parseInt(role) == 2) {
+			else if (MemberController.roleLoginForm.getId() == 2) {
 				model.addAttribute("invoice", new Invoice());
 				return "cart/checkout";
 			}
-			// employee
-			else if (Integer.parseInt(role) == 3) {
-				return "redirect:/home/products/1.htm";
-			}
+
 			// not login
 			else {
 				return "redirect:/user/login.htm";
@@ -62,7 +48,7 @@ public class InvoiceController {
 		}
 	}
 
-	@RequestMapping(value = "checkout", method = RequestMethod.POST)
+	@RequestMapping(value = "cart/checkout", method = RequestMethod.POST)
 	public String checkout(Model model, @ModelAttribute("invoice") Invoice invoice, BindingResult errors) {
 		System.out.println("voo daay nef");
 		System.out.println("voo emami" + invoice.getEmail());
@@ -86,7 +72,7 @@ public class InvoiceController {
 				// System.out.println("member id: " +
 				// MemberController.memberLoginForm.getId());
 				// if (MemberController.memberLoginForm != null) {
-				invoice.setMemberId(1);
+				invoice.setMemberId(MemberController.memberLoginForm.getId());
 				// }
 				invoiceDao.add(invoice);
 				return "redirect:/cart/index.htm";
@@ -97,4 +83,75 @@ public class InvoiceController {
 		}
 		return "cart/checkout";
 	}
+
+	// show list invoice
+	@RequestMapping("user/invoices")
+	public String index(Model model) {
+		if (MemberController.memberLoginForm != null) {
+			// admin
+			if (MemberController.roleLoginForm.getId() == 1 || MemberController.roleLoginForm.getId() == 3) {
+				return "redirect:/home/products/1.htm";
+			} else if (MemberController.roleLoginForm.getId() == 2) {
+				model.addAttribute("list", invoiceDao.getAllInvoice(MemberController.memberLoginForm.getId()));
+				return "order/list";
+			}
+
+			// not login
+			else {
+				return "redirect:/user/login.htm";
+			}
+		}
+		// not login
+		else {
+			return "redirect:/user/login.htm";
+		}
+	}
+
+	// cancel invoice
+	@RequestMapping("user/invoice/cancel/{id}")
+	public String cancel(@PathVariable("id") int id) {
+		if (MemberController.memberLoginForm != null) {
+			// admin
+			if (MemberController.roleLoginForm.getId() == 1 || MemberController.roleLoginForm.getId() == 3) {
+				return "redirect:/home/products/1.htm";
+			} else if (MemberController.roleLoginForm.getId() == 2) {
+				System.out.println("vo del");
+				invoiceDao.cancel(id);
+				return "redirect:/user/invoices.htm";
+			}
+
+			// not login
+			else {
+				return "redirect:/user/login.htm";
+			}
+		}
+		// not login
+		else {
+			return "redirect:/user/login.htm";
+		}
+	}
+
+	// show list invoice
+	@RequestMapping("user/invoice/detail/{id}")
+	public String invoiceDetail(Model model,@PathVariable("id") int id) {
+		if (MemberController.memberLoginForm != null) {
+			// admin
+			if (MemberController.roleLoginForm.getId() == 1 || MemberController.roleLoginForm.getId() == 3) {
+				return "redirect:/home/products/1.htm";
+			} else if (MemberController.roleLoginForm.getId() == 2) {
+				model.addAttribute("list", invoiceDao.getAllInvoiceDdetail(id));
+				return "order/detail";
+			}
+
+			// not login
+			else {
+				return "redirect:/user/login.htm";
+			}
+		}
+		// not login
+		else {
+			return "redirect:/user/login.htm";
+		}
+	}
+
 }

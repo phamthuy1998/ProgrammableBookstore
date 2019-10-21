@@ -22,55 +22,13 @@ span {
 	font-style: italic;
 }
 </style>
-
-<script type="text/javascript">
-	function onDelete(username) {
-		var seft = this;
-		if (username) {
-			swal(
-					{
-						title : "XÓA",
-						text : "Bạn muốn xóa" + username
-								+ " này ra khỏi hệ thông!",
-						type : "warning",
-						showCancelButton : true,
-						confirmButtonColor : "#DD6B55",
-						confirmButtonText : "Xóa",
-						cancalButtonText : "Hủy",
-						closeOnConfirm : false
-					},
-					function() {
-						$
-								.post(
-										'${pageContext.request.contextPath}/admin/account/delete',
-										{
-											username : username
-										},
-										function(res) {
-											console.log(res);
-											swal(
-													{
-														title : 'THÔNG BÁO',
-														type : res.errorCode == 0 ? 'success'
-																: 'error',
-														text : res.message
-													}, function() {
-														window.location
-																.reload();
-													}
-
-											);
-										});
-					});
-		}
-	}
-</script>
 </head>
 <body>
 	<div class="login">
 		<div class="col-ms-8 mx-auto">
 
 			<form:form method="post" class="form-add-author"
+				action="${pageContext.request.contextPath}/admin/product/edit.htm"
 				modelAttribute="product" enctype="multipart/form-data">
 
 				<h1 class="center lb-login">
@@ -80,7 +38,7 @@ span {
 				<br>
 
 				<div>
-					<form:input hidden="true" class="form-control" type="text"
+					<form:input readonly="true" class="form-control" type="text"
 						path="id" />
 				</div>
 
@@ -118,19 +76,23 @@ span {
 					<form:errors path="imageUrl" />
 				</p>
 
+				<img width="150px"
+					src="${pageContext.request.contextPath}/images/${product.imageUrl}">
+				</p>
+
 				<p>
 					<button class="btn btn-lg btn-primary">
 						<s:message code="btn_save_auth" />
 					</button>
-					<form:errors path="imageUrl" />
+					<%-- <form:errors path="imageUrl" /> --%>
 				</p>
-				<c:if test="${name != null}">
-					<img width="150px"
-						src="${pageContext.request.contextPath}/images/${name}">
+				<%-- <c:if test="${name != null}"> --%>
+				<p>
 
-				</c:if>
-				<br>
+					<%-- </c:if> --%>
 
+
+					<br>
 				<div class="center">
 					<a class="btn btn-outline-success"
 						href="${pageContext.request.contextPath}/admin/product/add.htm">
@@ -139,7 +101,6 @@ span {
 						class="btn btn-outline-danger"> <s:message code="label.cancel" />
 					</a>
 				</div>
-
 			</form:form>
 
 		</div>

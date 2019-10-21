@@ -1,6 +1,11 @@
 package phamthuy.ptithcm.controller;
 
-import javax.servlet.http.Cookie;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,10 +18,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
-import phamthuy.ptit.helper.Helper;
 import phamthuy.ptithcm.dao.ProductDao;
-import phamthuy.ptithcm.model.Member;
+import phamthuy.ptithcm.model.Author;
 import phamthuy.ptithcm.model.Product;
 
 @Controller
@@ -24,6 +29,8 @@ public class ProductController {
 
 	ProductDao productDao = new ProductDao();
 	private static int size = 6;
+	int id = 0;
+	String image = "";
 
 	@RequestMapping(value = { "home/products", "home/products/{p}" })
 	public String index(Model model, @PathVariable(value = "p") Integer page) {
@@ -96,10 +103,97 @@ public class ProductController {
 		}
 	}
 
-	@RequestMapping(value = "admin/product/add", method = RequestMethod.POST)
-	public String addProduct(Model model, @ModelAttribute("product") Product product, BindingResult errors) {
+	private static String upload(String path, MultipartFile part) throws IOException {
+		String fileName;
+		try (InputStream is = part.getInputStream()) {
+			fileName = part.getOriginalFilename().replaceAll("\\s", "_");
+			try (OutputStream os = new FileOutputStream(new File(path + fileName))) {
+				int len = 0;
+				byte[] bytes = new byte[1024];
+				while ((len = is.read(bytes, 0, 1024)) > 0) {
+					os.write(bytes, 0, len);
+				}
+			}
+		}
+		return fileName;
+	}
 
-		return "";
+	@RequestMapping(value = "admin/product/add", method = RequestMethod.POST)
+	public String addProduct(Model model, @ModelAttribute("product") Product product, HttpServletRequest request,
+			BindingResult errors, @RequestParam("f") MultipartFile part) {
+
+		if (MemberController.memberLoginForm != null) {
+			// admin
+			if (MemberController.roleLoginForm.getId() == 1 || MemberController.roleLoginForm.getId() == 3) {
+
+				try {
+					String path = request.getServletContext().getRealPath("/images/");
+					String name = upload(path, part);
+					model.addAttribute("name", name);
+
+					if (product.getTitle().equals("")) {
+						errors.rejectValue("title", "product", "Bạn chưa nhập tên sách");
+					}
+
+					if (product.getIsbn().equals("")) {
+						errors.rejectValue("isbn", "product", "Bạn chưa nhập mã vạch");
+					}
+
+					if (product.getPrice() == 0) {
+						errors.rejectValue("price", "product", "Bạn chưa nhập giá sách");
+					}
+
+					if (product.getPages().equals("")) {
+						errors.rejectValue("pages", "product", "Bạn chưa nhập số trang");
+					}
+
+					if (name.equals("")) {
+						errors.rejectValue("imageUrl", "product", "Bạn chưa nhập hình ảnh");
+					}
+
+					if (product.getTitle().equals("") || product.getTitle().equals("") || product.getPrice() == 0
+							|| product.getPages().equals("") || name.equals("")) {
+						return "product/add";
+					} else {
+						System.out.println("title product: " + product.getTitle());
+						System.out.println("isbn product: " + product.getIsbn());
+						System.out.println("trang product: " + product.getPages());
+						System.out.println("gia product: " + product.getPrice());
+						product.setImageUrl(name);
+						Integer id = productDao.insert(product);
+						return "redirect:/admin/products.htm";
+
+					}
+
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				return "product/add";
+
+			} else if (MemberController.roleLoginForm.getId() == 2) {
+				return "redirect:/home/products/1.htm";
+			} else {
+				return "redirect:/user/login.htm";
+			}
+		} else {
+			return "redirect:/user/login.htm";
+		}
+	}
+
+	private void renameImage(String name, String name2, String path) {
+
+		File f1 = new File(path + name);
+		File f2 = new File(path + name2);
+		// if f2 is exist, del it
+		if (f2.exists()) {
+			f2.delete();
+		}
+		boolean b = f1.renameTo(new File(path + name2));
+		if (b == true) {
+			System.out.println("ddoi ten thanh cong");
+		} else {
+			System.out.println("doi ten that bai");
+		}
 	}
 
 	// Del product
@@ -110,6 +204,8 @@ public class ProductController {
 			// admin
 			if (MemberController.roleLoginForm.getId() == 1 || MemberController.roleLoginForm.getId() == 3) {
 				System.out.println("vo del");
+				
+				delFile(id, request);
 				productDao.delete(id);
 				return "redirect:/admin/products.htm";
 			}
@@ -124,10 +220,27 @@ public class ProductController {
 			return "redirect:/user/login.htm";
 	}
 
+	public boolean delFile(int id, HttpServletRequest request) {
+		Product product = productDao.getProduct(id);
+		String fileName = product.getImageUrl();
+		String path = request.getServletContext().getRealPath("/images/");
+		File file = new File(path + fileName);
+		if (file.exists()) {
+			// del file
+			file.delete();
+			
+			if (file.exists())
+				return false;
+			else
+				return true;
+		}
+
+		return false;
+	}
+
 	// del list product
 	@RequestMapping(value = "admin/product/dels.htm", method = RequestMethod.POST)
 	public String delete(HttpServletRequest request, ModelMap model) {
-
 		if (MemberController.memberLoginForm != null) {
 			// admin
 			if (MemberController.roleLoginForm.getId() == 1 || MemberController.roleLoginForm.getId() == 3) {
@@ -154,6 +267,91 @@ public class ProductController {
 			}
 
 		} else {
+			return "redirect:/user/login.htm";
+		}
+	}
+
+	// Edit author
+	@RequestMapping("admin/product/edit/{id}")
+	public String edit(Model model, @PathVariable("id") int id) {
+		if (MemberController.memberLoginForm != null) {
+			// admin
+			if (MemberController.roleLoginForm.getId() == 1 || MemberController.roleLoginForm.getId() == 3) {
+				System.out.println("vô đây hk á");
+				this.id = id;
+				Product product = productDao.getProduct(id);
+				image = product.getImageUrl();
+				model.addAttribute("product", product);
+				return "product/edit";
+			} else if (MemberController.roleLoginForm.getId() == 2) {
+				return "redirect:/home/products/1.htm";
+			}
+			// not login
+			else {
+				return "redirect:/user/login.htm";
+			}
+		}
+		// not login
+		else {
+			return "redirect:/user/login.htm";
+		}
+	}
+
+	@RequestMapping(value = "admin/product/edit", method = RequestMethod.POST)
+	public String edit(Model model, @ModelAttribute("product") Product product, HttpServletRequest request,
+			BindingResult errors, @RequestParam("f") MultipartFile part) throws IOException {
+		if (MemberController.memberLoginForm != null) {
+			// admin
+			if (MemberController.roleLoginForm.getId() == 1 || MemberController.roleLoginForm.getId() == 3) {
+				String path = request.getServletContext().getRealPath("/images/");
+				if (!part.isEmpty()) {
+					image = upload(path, part);
+				}
+
+				// model.addAttribute("imageUrl", name);
+
+				if (product.getTitle().equals("")) {
+					errors.rejectValue("title", "product", "Bạn chưa nhập tên sách");
+				}
+
+				if (product.getIsbn().equals("")) {
+					errors.rejectValue("isbn", "product", "Bạn chưa nhập mã vạch");
+				}
+
+				if (product.getPrice() == 0) {
+					errors.rejectValue("price", "product", "Bạn chưa nhập giá sách");
+				}
+
+				if (product.getPages().equals("")) {
+					errors.rejectValue("pages", "product", "Bạn chưa nhập số trang");
+				}
+
+				if (product.getTitle().equals("") || product.getTitle().equals("") || product.getPrice() == 0
+						|| product.getPages().equals("")) {
+					return "product/add";
+				} else {
+
+					System.out.println("title product edit: " + product.getTitle());
+					System.out.println("isbn product edit: " + product.getIsbn());
+					System.out.println("trang product edit: " + product.getPages());
+					System.out.println("gia product edit: " + product.getPrice());
+					product.setImageUrl(image);
+					product.setId(id);
+					productDao.edit(product, this.id);
+					return "redirect:/admin/products.htm";
+				}
+
+			} else if (MemberController.roleLoginForm.getId() == 2) {
+				return "redirect:/home/products/1.htm";
+			}
+
+			// not login
+			else {
+				return "redirect:/user/login.htm";
+			}
+		}
+		// not login
+		else {
 			return "redirect:/user/login.htm";
 		}
 	}

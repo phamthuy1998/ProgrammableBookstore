@@ -1,6 +1,5 @@
 package phamthuy.ptithcm.controller;
 
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import phamthuy.ptithcm.dao.AuthorDao;
 import phamthuy.ptithcm.model.Author;
+import phamthuy.ptithcm.model.Invoice;
 
 @Controller
 public class AuthorController {
@@ -21,8 +21,25 @@ public class AuthorController {
 	// show list author
 	@RequestMapping("admin/authors")
 	public String index(Model model) {
-		model.addAttribute("list", authorDao.getAllAuthor());
-		return "author/list";
+		if (MemberController.memberLoginForm != null) {
+			// admin
+			if (MemberController.roleLoginForm.getId() == 1 || MemberController.roleLoginForm.getId() == 3) {
+
+				model.addAttribute("list", authorDao.getAllAuthor());
+				return "author/list";
+			} else if (MemberController.roleLoginForm.getId() == 2) {
+				return "redirect:/home/products/1.htm";
+			}
+
+			// not login
+			else {
+				return "redirect:/user/login.htm";
+			}
+		}
+		// not login
+		else {
+			return "redirect:/user/login.htm";
+		}
 	}
 
 	// Insert author
@@ -33,53 +50,134 @@ public class AuthorController {
 
 	@RequestMapping(value = "admin/author/add.htm", method = RequestMethod.POST)
 	public String addPost(Author author) {
-		// if insert success, then return back to admin/authors.htm page
-		if (authorDao.insert(author) == 1) {
-			return "redirect:/admin/authors.htm";
+		if (MemberController.memberLoginForm != null) {
+			// admin
+			if (MemberController.roleLoginForm.getId() == 1 || MemberController.roleLoginForm.getId() == 3) {
+
+				// if insert success, then return back to admin/authors.htm page
+				if (authorDao.insert(author) == 1) {
+					return "redirect:/admin/authors.htm";
+				}
+				// if not, still be there
+				return "author/add";
+			} else if (MemberController.roleLoginForm.getId() == 2) {
+				return "redirect:/home/products/1.htm";
+			}
+
+			// not login
+			else {
+				return "redirect:/user/login.htm";
+			}
 		}
-		// if not, still be there
-		return "author/add";
+		// not login
+		else {
+			return "redirect:/user/login.htm";
+		}
 	}
 
 	// Del author
 	@RequestMapping("admin/author/del/{id}")
 	public String delete(@PathVariable("id") int id) {
-		System.out.println("vo del");
-		authorDao.delete(id);
-		return "redirect:/admin/authors.htm";
+		if (MemberController.memberLoginForm != null) {
+			// admin
+			if (MemberController.roleLoginForm.getId() == 1 || MemberController.roleLoginForm.getId() == 3) {
+				System.out.println("vo del");
+				authorDao.delete(id);
+				return "redirect:/admin/authors.htm";
+			} else if (MemberController.roleLoginForm.getId() == 2) {
+				return "redirect:/home/products/1.htm";
+			}
+
+			// not login
+			else {
+				return "redirect:/user/login.htm";
+			}
+		}
+		// not login
+		else {
+			return "redirect:/user/login.htm";
+		}
 	}
 
 	@RequestMapping(value = "admin/author/dels.htm", method = RequestMethod.POST)
 	public String delete(HttpServletRequest request, ModelMap model) {
-		String arrAuthorID[] = request.getParameterValues("authorIds");
-		try {
-			if (arrAuthorID.length != 0) {
-				for (String id : arrAuthorID) {
-					authorDao.delete(Integer.parseInt(id));
-				}
-				model.addAttribute("list", authorDao.getAllAuthor());
-			}
-			return "redirect:/admin/authors.htm";
-		} catch (Exception e) {
-			model.addAttribute("error", e.getMessage());
-			model.addAttribute("list", authorDao.getAllAuthor());
-			return "redirect:/admin/authors.htm";
-		}
+		if (MemberController.memberLoginForm != null) {
+			// admin
+			if (MemberController.roleLoginForm.getId() == 1 || MemberController.roleLoginForm.getId() == 3) {
 
+				String arrAuthorID[] = request.getParameterValues("authorIds");
+				try {
+					if (arrAuthorID.length != 0) {
+						for (String id : arrAuthorID) {
+							authorDao.delete(Integer.parseInt(id));
+						}
+						model.addAttribute("list", authorDao.getAllAuthor());
+					}
+					return "redirect:/admin/authors.htm";
+				} catch (Exception e) {
+					model.addAttribute("error", e.getMessage());
+					model.addAttribute("list", authorDao.getAllAuthor());
+					return "redirect:/admin/authors.htm";
+				}
+			} else if (MemberController.roleLoginForm.getId() == 2) {
+				return "redirect:/home/products/1.htm";
+			}
+
+			// not login
+			else {
+				return "redirect:/user/login.htm";
+			}
+		}
+		// not login
+		else {
+			return "redirect:/user/login.htm";
+		}
 	}
 
 	// Edit author
 	@RequestMapping("admin/author/edit/{id}")
 	public String edit(Model model, @PathVariable("id") int id) {
-		System.out.println("vô đây hk á");
-		model.addAttribute("o", authorDao.getAuthor(id));
-		return "author/edit";
+		if (MemberController.memberLoginForm != null) {
+			// admin
+			if (MemberController.roleLoginForm.getId() == 1 || MemberController.roleLoginForm.getId() == 3) {
+				System.out.println("vô đây hk á");
+				model.addAttribute("o", authorDao.getAuthor(id));
+				return "author/edit";
+			} else if (MemberController.roleLoginForm.getId() == 2) {
+				return "redirect:/home/products/1.htm";
+			}
+			// not login
+			else {
+				return "redirect:/user/login.htm";
+			}
+		}
+		// not login
+		else {
+			return "redirect:/user/login.htm";
+		}
 	}
 
 	@RequestMapping(value = "admin/author/edit/{id}", method = RequestMethod.POST)
 	public String edit(Model model, Author obj, @PathVariable("id") int id) {
-		System.out.println("vô đây hk ta");
-		authorDao.edit(obj);
-		return "redirect:/admin/authors.htm";
+		if (MemberController.memberLoginForm != null) {
+			// admin
+			if (MemberController.roleLoginForm.getId() == 1 || MemberController.roleLoginForm.getId() == 3) {
+				
+				System.out.println("vô đây hk ta");
+				authorDao.edit(obj);
+				return "redirect:/admin/authors.htm";
+			} else if (MemberController.roleLoginForm.getId() == 2) {
+				return "redirect:/home/products/1.htm";
+			}
+
+			// not login
+			else {
+				return "redirect:/user/login.htm";
+			}
+		}
+		// not login
+		else {
+			return "redirect:/user/login.htm";
+		}
 	}
 }

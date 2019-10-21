@@ -10,9 +10,8 @@ public class Invoice {
 	private String address;
 	private String email;
 	private Date date;
-	private byte statusId;
+	private Integer statusId;
 	private String status;
-	private List<InvoiceDetail> details;
 
 	public Invoice() {
 	}
@@ -29,7 +28,7 @@ public class Invoice {
 		this(id, memberId, tel, address, email, Byte.MIN_VALUE, null, null);
 	}
 */
-	public Invoice(int id, int memberId, String tel, String address, String email, byte statusId, String status,
+	public Invoice(int id, int memberId, String tel, String address, String email, Integer statusId, String status,
 			Date date) {
 		this.id = id;
 		this.memberId = memberId;
@@ -89,11 +88,11 @@ public class Invoice {
 		this.email = email;
 	}
 
-	public byte getStatusId() {
+	public Integer getStatusId() {
 		return statusId;
 	}
 
-	public void setStatusId(byte statusId) {
+	public void setStatusId(Integer statusId) {
 		this.statusId = statusId;
 	}
 
@@ -103,13 +102,5 @@ public class Invoice {
 
 	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	public List<InvoiceDetail> getDetails() {
-		return details;
-	}
-
-	public void setDetails(List<InvoiceDetail> details) {
-		this.details = details;
 	}
 }

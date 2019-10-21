@@ -36,11 +36,12 @@
 		<input type="submit" value="Delete"
 			onclick="return confirm('Are you sure you want to delete these authors? \n${list.size()} item')" />
 		<br /> ${error} <br />
-		<table class="table table-hover border table-striped">
-			<tr class="thead-dark">
+		<table class="table table-hover border  table-bordered ">
+			<tr class="table-primary">
 				<th><input type="checkbox" id="checkBoxAll" /></th>
 				<th><s:message code="id_book" /></th>
 				<th><s:message code="name_book" /></th>
+				<th><s:message code="isbn" /></th>
 				<th><s:message code="price_book" /></th>
 				<th><s:message code="page_book" /></th>
 				<th><s:message code="image_book" /></th>
@@ -53,10 +54,11 @@
 						name="productIds" /></td>
 					<td>${p.id}</td>
 					<td>${p.title}</td>
+					<td>${p.isbn}</td>
 					<td><fmt:formatNumber value="${p.price}" type="currency" /></td>
 					<td>${p.pages}</td>
 					<td><img width="100px"
-						src="${pageContext.request.contextPath}/images/${p.imageUrl}.jpg"></td>
+						src="${pageContext.request.contextPath}/images/${p.imageUrl}"></td>
 					<td><a 
 						href="${pageContext.request.contextPath}/admin/product/edit/${p.id}.htm">
 							<img src="${pageContext.request.contextPath}/images/edit.png"

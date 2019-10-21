@@ -11,7 +11,7 @@
 		<div class="col-4">
 			<div class="item">
 				<img alt="${o.title}"   width="200"
-					src="${pageContext.request.contextPath}/images/${o.imageUrl}.jpg">
+					src="${pageContext.request.contextPath}/images/${o.imageUrl}">
 				<div class="info">
 					<a
 						href="${pageContext.request.contextPath}/home/product/detail/${o.id}.htm">${o.title}</a>

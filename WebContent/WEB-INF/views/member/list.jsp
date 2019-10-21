@@ -2,6 +2,7 @@
 <%@ page language="java" pageEncoding="utf-8"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,20 +28,22 @@
 </script>
 </head>
 <body>
+	<h1 class="center lb-login"><s:message code="list_user" /></h1>
+	
 	<a href="${pageContext.request.contextPath}/admin/user/add.htm"
 		class="btn btnprimary"><s:message code="label.insert" /></a>
 	<div></div>
-	
+
 	<form method="post"
 		action="${pageContext.request.contextPath}/admin/user/dels.htm">
-		
+
 		<input type="submit" value="<s:message code="label.delete" />"
 			onclick="return confirm('Are you sure you want to delete these authors?')" />
-		
+
 		<br /> ${error} <br />
-		
-		<table class="table table-hover border table-striped">
-			<tr class="thead-dark">
+
+		<table class="table table-hover border  table-bordered ">
+			<tr class="table-primary">
 				<th><input type="checkbox" id="checkBoxAll" /></th>
 				<th><s:message code="label.id" /></th>
 				<th><s:message code="label.username" /></th>
@@ -62,7 +65,7 @@
 					<td>${member.tel}</td>
 					<td>${member.email}</td>
 					<td>${member.gender}</td>
-					<td>${member.addeddate}</td>
+					<td><fmt:formatDate value="${member.addeddate}" pattern="dd/MM/yyyy" /></td>
 
 					<td><a
 						href="${pageContext.request.contextPath}/admin/user/edit/${member.id}.htm">

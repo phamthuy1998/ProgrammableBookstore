@@ -17,7 +17,7 @@
 		</p>
 	</form>
 	<c:if test="${name != null}">
-		<img src="${pageContext.request.contextPath}/upload/${name}">
+		<img src="${pageContext.request.contextPath}/images/${name}">
 	</c:if>
  
 </body>

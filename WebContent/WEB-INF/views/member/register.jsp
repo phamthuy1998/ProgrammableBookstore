@@ -17,30 +17,6 @@ span {
 <script src="../js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/css.css">
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
-<%-- <script>
-	$(function() {
-		$("a[data-lang]").click(
-				function() {
-					var lang = $(this).attr("data-lang");
-					$.get(
-							"${pageContext.request.contextPath}/user/register.htm?language="
-									+ lang, function() {
-								location.reload();
-							});
-					$.get(
-							"${pageContext.request.contextPath}/user/login.htm?language="
-									+ lang, function() {
-								location.reload();
-							});
-					$.get(
-							"${pageContext.request.contextPath}/user/forgot.htm?language="
-									+ lang, function() {
-								location.reload();
-							});
-					return false;
-				});
-	});
-</script> --%>
 
 <script>
 	$(function() {

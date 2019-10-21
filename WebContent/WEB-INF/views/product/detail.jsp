@@ -1,6 +1,8 @@
+
+<%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt"%>
 <div class="products">
 	<div class="col-4">
-		<img src="${pageContext.request.contextPath}/images/${o.id}.jpg" width="300" >
+		<img src="${pageContext.request.contextPath}/images/${o.imageUrl}" width="300" >
 	</div>
 	<div class="col-8">
 		<h2>${o.title}</h2>
@@ -11,7 +13,7 @@
 			Pages: <b>${o.pages}</b>
 		</p>
 		<p>
-			Price: <b>${o.price}</b>
+			Price: <b><fmt:formatNumber value="${o.price}" type="currency" /></b>
 		</p>
 		<form method="post"
 			action="${pageContext.request.contextPath}/cart/add.htm">

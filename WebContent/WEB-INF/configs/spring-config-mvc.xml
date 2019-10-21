@@ -41,26 +41,17 @@
 	</mvc:interceptors>
 
 	<!-- Cấu hình view -->
-	<bean id="viewResolver" p:prefix="/WEB-INF/views/" p:suffix=".jsp"
+	<bean id="viewResolver" p:prefix="/WEB-INF/views/index.jsp?view=" p:suffix=".jsp"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver" />
 
 	<!-- Cấu hình package chứa các controller -->
 	<context:component-scan base-package="phamthuy.ptithcm.controller" />
 
 	<!-- Cấu hình để load file hình ảnh -->
-	<mvc:resources location="/upload/" mapping="/upload/*" />
+	<mvc:resources location="/images/" mapping="/images/*" />
 
 	<mvc:resources location="/css/" mapping="/css/*" />
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
-
-	<!-- <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"> 
-		SMTP settings <property name="host" value="smtp.gmail.com" /> <property name="port" 
-		value="465" /> <property name="username" value="congnghephanmenptithcm@gmail.com" 
-		/> <property name="password" value="quankhung123" /> <property name="javaMailProperties"> 
-		additional properties specific to JavaMail <props> <prop key="mail.smtp.auth">true</prop> 
-		<prop key="mail.smtp.socketFactory.port">465</prop> <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop> 
-		<prop key="mail.smtp.port">587</prop> <prop key="mail.transport.protocol">smtp</prop> 
-		<prop key="mail.smtp.starttls.enable">true</prop> </props> </property> </bean> -->
 
 </beans>

@@ -6,7 +6,10 @@ import java.util.List;
 
 import org.springframework.jdbc.core.RowMapper;
 
+import phamthuy.ptit.helper.Helper;
 import phamthuy.ptithcm.mapper.ProductMapper;
+import phamthuy.ptithcm.model.Author;
+import phamthuy.ptithcm.model.Member;
 import phamthuy.ptithcm.model.Product;
 
 public class ProductDao extends AstractDao {
@@ -23,10 +26,11 @@ public class ProductDao extends AstractDao {
 		return getJdbcTemplate().update("DELETE FROM Product WHERE ProductId = ?", id);
 	}
 
-/*	public List<Product> getProducts() {
-		List<Product> list = getJdbcTemplate().query("SELECT * FROM Product", new ProductMapper());
-		return list;
-	}*/
+	/*
+	 * public List<Product> getProducts() { List<Product> list =
+	 * getJdbcTemplate().query("SELECT * FROM Product", new ProductMapper());
+	 * return list; }
+	 */
 
 	public List<Product> getProducts(Integer index, Integer size) {
 		return getJdbcTemplate().query(
@@ -66,4 +70,21 @@ public class ProductDao extends AstractDao {
 	public List<Product> search(String q) {
 		return getJdbcTemplate().query("SELECT * FROM Product WHERE Title LIKE ?", new ProductMapper(), "%" + q + "%");
 	}
+
+	public Integer insert(Product product) {
+		return getJdbcTemplate().update("insert into Product(Title,ISBN,Price,Pages, ImageUrl) values(?,?,?,?,?)",
+				product.getTitle(), product.getIsbn(), product.getPrice(), product.getPages(), product.getImageUrl());
+	}
+
+	public int edit(Product product, int id) {
+		return getJdbcTemplate().update(
+				"UPDATE Product SET Title = ?, ISBN =?, Price=?,Pages=?, ImageUrl=? WHERE ProductId = ?", product.getTitle(),
+				product.getIsbn(), product.getPrice(), product.getPages(), product.getImageUrl(), id);
+	}
+
+	// public int updateImg(Product product) {
+	// return getJdbcTemplate().update("UPDATE Product SET ImageUrl = ? WHERE
+	// ProductId = ?", product.getImageUrl(),
+	// product.getId());
+	// }
 }

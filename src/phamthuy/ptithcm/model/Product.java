@@ -65,6 +65,43 @@ public class Product {
 		this.pages = pages;
 		this.imageUrl = imageUrl;
 	}
+	
+	
+
+	public Product(int id, String title, String isbn, int price, String pages) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.isbn = isbn;
+		this.price = price;
+		this.pages = pages;
+	}
+
+	public Product(int id, String title, String isbn, int price) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.isbn = isbn;
+		this.price = price;
+	}
+
+	public Product(int id, String title, String isbn) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.isbn = isbn;
+	}
+
+	public Product(int id, String title) {
+		super();
+		this.id = id;
+		this.title = title;
+	}
+
+	public Product(int id) {
+		super();
+		this.id = id;
+	}
 
 	public Product() {
 		super();

@@ -302,29 +302,6 @@ public class MemberController {
 
 	@RequestMapping(value = "user/logout", method = RequestMethod.GET)
 	public String logout(HttpServletResponse response, HttpServletRequest request, ModelMap model) {
-		/*
-		 * // Delete all the cookies for (Cookie cookie : request.getCookies())
-		 * { if (cookie.getName().equals("userEmail") ||
-		 * cookie.getName().equals("userID") ||
-		 * cookie.getName().equals("userPass") ||
-		 * cookie.getName().equals("userRole")) { cookie.setMaxAge(0);
-		 * cookie.setValue(null); cookie.setPath("/");
-		 * response.addCookie(cookie); } }
-		 */
-		/*
-		 * Cookie cookie = new Cookie("userEmail", ""); cookie.setMaxAge(0);
-		 * response.addCookie(cookie);
-		 * 
-		 * Cookie cookie1 = new Cookie("userID", ""); cookie1.setMaxAge(0);
-		 * response.addCookie(cookie1);
-		 * 
-		 * Cookie cookie2 = new Cookie("userPass", ""); cookie2.setMaxAge(0);
-		 * response.addCookie(cookie2);
-		 * 
-		 * Cookie cookie3 = new Cookie("userRole", ""); cookie3.setMaxAge(0);
-		 * response.addCookie(cookie3);
-		 */
-
 		MemberController.memberLoginForm = null;
 		MemberController.roleLoginForm = null;
 
@@ -455,6 +432,79 @@ public class MemberController {
 		}
 		return "member/forgot";
 
+	}
+
+	// Edit author
+	@RequestMapping(value = "user/edit", method = RequestMethod.GET)
+	public String editUser(Model model, HttpServletRequest request, HttpServletResponse response) {
+		if (MemberController.roleLoginForm != null) {
+			System.out.println("edit user 1");
+			model.addAttribute("member", memberDao.getMember(MemberController.memberLoginForm.getId()));
+			System.out.println("add attribute rooif");
+			return "member/edit_user";
+		} else {
+			return "redirect:/user/login.htm";
+		}
+	}
+
+	@RequestMapping(value = "user/edit", method = RequestMethod.POST)
+	public String editUser(Model model, @ModelAttribute("member") Member member, BindingResult errors,
+			HttpServletRequest request, HttpServletResponse response) {
+
+		if (MemberController.roleLoginForm != null) {
+			System.out.println("edit user 2");
+			if (member.getUsername().trim().equals("")) {
+				System.out.println("user name rong");
+				errors.rejectValue("username", "member", "Vui lòng nhập tên người dùng!");
+			}
+
+			if (member.getEmail().trim().equals("")) {
+				System.out.println("mail name rong");
+				errors.rejectValue("email", "member", "Vui lòng nhập email!");
+			}
+			// mail da ton tai
+			else if (memberDao.getMemberIDByEmail(member.getEmail()) > 1) {
+				errors.rejectValue("email", "member", "Email đã tồn tại!");
+			}
+			// mail k hop le
+			else if (Helper.checkEmail(member.getEmail().trim()) == false) {
+				errors.rejectValue("email", "member", "Email không hợp lệ!");
+			}
+
+			if (member.getPassword().trim().equals("")) {
+				System.out.println("pass name rong");
+				errors.rejectValue("password", "member", "Vui lòng nhập password!");
+			}
+
+			if (member.getTel().trim().equals("")) {
+				System.out.println("tel name rong");
+				errors.rejectValue("tel", "member", "Vui lòng nhập số điện thoại!");
+			}
+			// so dt da ton tai
+			else if (memberDao.getMemberIDByPhone(member.getTel()) > 1) {
+				errors.rejectValue("tel", "member", "Số điện thoại đã tồn tại!");
+			}
+			// so dt k hop le
+			else if (Helper.isValidPhone(member.getTel().trim()) == false) {
+				errors.rejectValue("tel", "member", "Số điện thoại không hợp lệ!");
+			}
+
+			//k hop le
+			if (memberDao.getMemberIDByEmail(member.getEmail()) > 1 || memberDao.getMemberIDByPhone(member.getTel()) > 1
+					|| member.getTel().trim().equals("") || member.getPassword().trim().equals("")
+					|| member.getEmail().trim().equals("") || member.getUsername().trim().equals("")) {
+				return "member/edit_user";
+
+			} else {
+
+				System.out.println("edit user 3:"+member.getPassword());
+				memberDao.edit(member);
+				MemberController.memberLoginForm = member;
+				return "redirect:/home/products/1.htm";
+			}
+		} else {
+			return "redirect:/user/login.htm";
+		}
 	}
 
 }

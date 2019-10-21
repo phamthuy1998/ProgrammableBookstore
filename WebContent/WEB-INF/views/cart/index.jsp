@@ -36,7 +36,7 @@
 				<td>${o.price}</td>
 
 				<td><img width="70px"
-					src="${pageContext.request.contextPath}/images/${o.imageUrl}.jpg"></td>
+					src="${pageContext.request.contextPath}/images/${o.imageUrl}"></td>
 
 				<td><a
 					onclick="return confirm('Are you sure you want to delete this ${o.title} from cart?')"

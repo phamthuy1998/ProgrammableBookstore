@@ -25,83 +25,206 @@ public class CategoryController {
 	// show list category
 	@RequestMapping("admin/categories")
 	public String index(Model model) {
-		model.addAttribute("list", categoryDao.getAllCategory());
-		return "category/list";
+		if (MemberController.memberLoginForm != null) {
+			// admin
+			if (MemberController.roleLoginForm.getId() == 1 || MemberController.roleLoginForm.getId() == 3) {
+				model.addAttribute("list", categoryDao.getAllCategory());
+				return "category/list";
+			} else if (MemberController.roleLoginForm.getId() == 2) {
+				return "redirect:/home/products/1.htm";
+			}
+			// not login
+			else {
+				return "redirect:/user/login.htm";
+			}
+		}
+		// not login
+		else {
+			return "redirect:/user/login.htm";
+		}
+
 	}
 
 	@RequestMapping("admin/category/add")
 	public String add(Model model) {
-		// get all category
-		List<Category> list = categoryDao.getAllCategory();
-		Map<Integer, String> map = new HashMap<>();
-		for (Category item : list) {
-			map.put(item.getId(), item.getName());
+		if (MemberController.memberLoginForm != null) {
+			// admin
+			if (MemberController.roleLoginForm.getId() == 1 || MemberController.roleLoginForm.getId() == 3) {
+				// get all category
+				List<Category> list = categoryDao.getAllCategory();
+				Map<Integer, String> map = new HashMap<>();
+				for (Category item : list) {
+					map.put(item.getId(), item.getName());
+				}
+				model.addAttribute("map", map);
+				model.addAttribute("obj", new Category());
+				return "category/add";
+			} else if (MemberController.roleLoginForm.getId() == 2) {
+
+				return "redirect:/home/products/1.htm";
+			}
+			// not login
+			else {
+				return "redirect:/user/login.htm";
+			}
 		}
-		model.addAttribute("map", map);
-		model.addAttribute("obj", new Category());
-		return "category/add";
+		// not login
+		else {
+			return "redirect:/user/login.htm";
+		}
+
 	}
 
 	@RequestMapping(value = "admin/category/add", method = RequestMethod.POST)
 	public String add(Model model, @ModelAttribute("obj") Category obj, BindingResult errors) {
-		if (obj.getName().equals("")) {
-			errors.rejectValue("name", "obj", "Vui lòng nhập tên sách!");
+		if (MemberController.memberLoginForm != null) {
+			// admin
+			if (MemberController.roleLoginForm.getId() == 1 || MemberController.roleLoginForm.getId() == 3) {
+				// get all category
 
-		} else {
-			categoryDao.add(obj);
-			return "redirect:/admin/categories.htm";
+				if (obj.getName().equals("")) {
+					errors.rejectValue("name", "obj", "Vui lòng nhập tên sách!");
+
+				} else {
+					categoryDao.add(obj);
+					return "redirect:/admin/categories.htm";
+				}
+				return "category/add";
+			} else if (MemberController.roleLoginForm.getId() == 2) {
+				return "redirect:/home/products/1.htm";
+			}
+			// not login
+			else {
+				return "redirect:/user/login.htm";
+			}
 		}
-		return "category/add";
+		// not login
+		else {
+			return "redirect:/user/login.htm";
+		}
+
 	}
 
 	@RequestMapping("admin/category/edit/{id}")
 	public String edit(Model model, @PathVariable("id") int id) {
-		List<Category> list = categoryDao.getAllCategory();
-		Map<Integer, String> map = new HashMap<>();
-		for (Category item : list) {
-			map.put(item.getId(), item.getName());
+		if (MemberController.memberLoginForm != null) {
+			// admin
+			if (MemberController.roleLoginForm.getId() == 1 || MemberController.roleLoginForm.getId() == 3) {
+				// get all category
+
+				List<Category> list = categoryDao.getAllCategory();
+				Map<Integer, String> map = new HashMap<>();
+				for (Category item : list) {
+					map.put(item.getId(), item.getName());
+				}
+				model.addAttribute("map", map);
+				model.addAttribute("obj", categoryDao.getCategory(id));
+				return "category/edit";
+
+			} else if (MemberController.roleLoginForm.getId() == 2) {
+
+				return "redirect:/home/products/1.htm";
+			}
+			// not login
+			else {
+				return "redirect:/user/login.htm";
+			}
 		}
-		model.addAttribute("map", map);
-		model.addAttribute("obj", categoryDao.getCategory(id));
-		return "category/edit";
+		// not login
+		else {
+			return "redirect:/user/login.htm";
+		}
+
 	}
 
 	@RequestMapping(value = "admin/category/edit/{id}", method = RequestMethod.POST)
 	public String edit(Model model, @ModelAttribute("obj") Category obj, BindingResult errors) {
-		if (obj.getName().equals("")) {
-			errors.rejectValue("name", "obj", "Vui lòng nhập tên sách!");
+		if (MemberController.memberLoginForm != null) {
+			// admin
+			if (MemberController.roleLoginForm.getId() == 1 || MemberController.roleLoginForm.getId() == 3) {
 
-		} else {
-			categoryDao.edit(obj);
-			return "redirect:/admin/categories.htm";
+				if (obj.getName().equals("")) {
+					errors.rejectValue("name", "obj", "Vui lòng nhập tên sách!");
+
+				} else {
+					categoryDao.edit(obj);
+					return "redirect:/admin/categories.htm";
+				}
+				return "category/edit";
+			} else if (MemberController.roleLoginForm.getId() == 2) {
+
+				return "redirect:/home/products/1.htm";
+			}
+			// not login
+			else {
+				return "redirect:/user/login.htm";
+			}
 		}
-		return "category/edit";
+		// not login
+		else {
+			return "redirect:/user/login.htm";
+		}
 	}
 
 	// Del category
 	@RequestMapping("admin/category/del/{id}")
 	public String delete(@PathVariable("id") int id) {
-		System.out.println("vo del");
-		categoryDao.delete(id);
-		return "redirect:/admin/categories.htm";
+		if (MemberController.memberLoginForm != null) {
+			// admin
+			if (MemberController.roleLoginForm.getId() == 1 || MemberController.roleLoginForm.getId() == 3) {
+
+				System.out.println("vo del");
+				categoryDao.delete(id);
+				return "redirect:/admin/categories.htm";
+			} else if (MemberController.roleLoginForm.getId() == 2) {
+
+				return "redirect:/home/products/1.htm";
+			}
+			// not login
+			else {
+				return "redirect:/user/login.htm";
+			}
+		}
+		// not login
+		else {
+			return "redirect:/user/login.htm";
+		}
 	}
 
 	@RequestMapping(value = "admin/category/dels.htm", method = RequestMethod.POST)
 	public String delete(HttpServletRequest request, ModelMap model) {
-		String arrCategoryID[] = request.getParameterValues("categoryIds");
-		try {
-			if (arrCategoryID.length != 0) {
-				for (String id : arrCategoryID) {
-					categoryDao.delete(Integer.parseInt(id));
+		if (MemberController.memberLoginForm != null) {
+			// admin
+			if (MemberController.roleLoginForm.getId() == 1 || MemberController.roleLoginForm.getId() == 3) {
+
+				String arrCategoryID[] = request.getParameterValues("categoryIds");
+				try {
+					if (arrCategoryID.length != 0) {
+						for (String id : arrCategoryID) {
+							categoryDao.delete(Integer.parseInt(id));
+						}
+						model.addAttribute("list", categoryDao.getAllCategory());
+					}
+					return "redirect:/admin/categories.htm";
+				} catch (Exception e) {
+					model.addAttribute("error", e.getMessage());
+					model.addAttribute("list", categoryDao.getAllCategory());
+					return "redirect:/admin/categories.htm";
 				}
-				model.addAttribute("list", categoryDao.getAllCategory());
+			} else if (MemberController.roleLoginForm.getId() == 2) {
+
+				return "redirect:/home/products/1.htm";
 			}
-			return "redirect:/admin/categories.htm";
-		} catch (Exception e) {
-			model.addAttribute("error", e.getMessage());
-			model.addAttribute("list", categoryDao.getAllCategory());
-			return "redirect:/admin/categories.htm";
+			// not login
+			else {
+				return "redirect:/user/login.htm";
+			}
+		}
+		// not login
+		else {
+			return "redirect:/user/login.htm";
 		}
 
 	}
+
 }

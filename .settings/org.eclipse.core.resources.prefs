@@ -6,4 +6,7 @@ encoding//src/phamthuy/ptithcm/controller/CartController.java=UTF-8
 encoding//src/phamthuy/ptithcm/controller/CategoryController.java=UTF-8
 encoding//src/phamthuy/ptithcm/controller/InvoiceController.java=UTF-8
 encoding//src/phamthuy/ptithcm/controller/MemberController.java=UTF-8
+encoding//src/phamthuy/ptithcm/controller/ProductController.java=UTF-8
 encoding//src/phamthuy/ptithcm/dao/AstractDao.java=UTF-8
+encoding//src/phamthuy/ptithcm/mapper/InvoiceDetailMapper.java=UTF-8
+encoding//src/phamthuy/ptithcm/mapper/InvoiceMapper.java=UTF-8

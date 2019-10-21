@@ -21,6 +21,7 @@ public class CartController {
 
 	CartDao cartDao = new CartDao();
 	InvoiceDao invoiceDao = new InvoiceDao();
+	public static boolean checkAddCart = false;
 
 	// Del category
 	@RequestMapping("del/{productId}")
@@ -33,34 +34,21 @@ public class CartController {
 
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public String add(Model model, Cart cart, HttpServletRequest request, HttpServletResponse response) {
-		
-		//get user's infor from cookie
-		String userID = null, role = null;
-		for (Cookie cookie : request.getCookies()) {
-			if (cookie.getName().equals("userID")) {
-				userID = cookie.getValue();
-			}
-			if (cookie.getName().equals("userRole")) {
-				role = cookie.getValue();
-			}
-		}
 
-		if (userID != null) {
+		if (MemberController.memberLoginForm != null) {
 			// admin
-			if (Integer.parseInt(role) == 1) {
+			if (MemberController.roleLoginForm.getId() == 1 || MemberController.roleLoginForm.getId() == 3) {
+
 				return "redirect:/home/products/1.htm";
 			}
 			// Member
-			else if (Integer.parseInt(role) == 2) {
-				cart.setMemberId(Integer.parseInt(userID));
+			else if (MemberController.roleLoginForm.getId() == 2) {
+				cart.setMemberId(MemberController.memberLoginForm.getId());
 				cartDao.add(cart);
 				model.addAttribute("list", cartDao.getCarts(MemberController.memberLoginForm.getId()));
 				return "redirect:/cart/index.htm";
 			}
-			// employee
-			else if (Integer.parseInt(role) == 3) {
-				return "redirect:/home/products/1.htm";
-			}
+
 			// not login
 			else {
 				return "redirect:/user/login.htm";
@@ -74,25 +62,16 @@ public class CartController {
 
 	@RequestMapping("index")
 	public String index(Model model, HttpServletRequest request) {
-		String userID = null, role = null;
-		for (Cookie cookie : request.getCookies()) {
-			if (cookie.getName().equals("userID")) {
-				userID = cookie.getValue();
+		if (MemberController.memberLoginForm != null) {
+			// admin
+			if (MemberController.roleLoginForm.getId() == 1 || MemberController.roleLoginForm.getId() == 3) {
+				return "redirect:/home/products/1.htm";
 			}
-			if (cookie.getName().equals("userRole")) {
-				role = cookie.getValue();
-			}
-		}
 
-		if (userID != null) {
 			// member
-			if (Integer.parseInt(role) == 2) {
+			if (MemberController.roleLoginForm.getId() == 2) {
 				model.addAttribute("list", cartDao.getCarts(MemberController.memberLoginForm.getId()));
 				return "cart/index";
-			}
-			// admin or employee
-			else if (Integer.parseInt(role) == 1 || Integer.parseInt(role) == 3) {
-				return "redirect:/home/products/1.htm";
 			}
 			// not exist
 			else {
@@ -101,7 +80,5 @@ public class CartController {
 		} else {
 			return "redirect:/user/login.htm";
 		}
-
 	}
-
 }

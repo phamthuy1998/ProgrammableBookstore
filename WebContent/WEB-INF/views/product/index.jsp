@@ -27,10 +27,14 @@
 	<div class="products">
 		<c:forEach var="o" items="${list}">
 			<div class="col-4">
-				<div class="item">
-					<img class="img-product" alt="${o.title}"
-						src="${pageContext.request.contextPath}/images/${o.imageUrl}.jpg">
+				<div class="item" >
+					<a
+						href="${pageContext.request.contextPath}/home/product/detail/${o.id}.htm">
+						<img class="img-product" alt="${o.title}"
+						src="${pageContext.request.contextPath}/images/${o.imageUrl}">
+					</a>
 					<div class="info">
+
 						<a
 							href="${pageContext.request.contextPath}/home/product/detail/${o.id}.htm">${o.title}</a>
 					</div>

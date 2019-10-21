@@ -2,22 +2,27 @@ package phamthuy.ptithcm.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.jdbc.core.RowMapper;
 
 import phamthuy.ptit.helper.Helper;
-import phamthuy.ptithcm.mapper.AuthorMapper;
 import phamthuy.ptithcm.mapper.MemberMapper;
-import phamthuy.ptithcm.model.Author;
 import phamthuy.ptithcm.model.Member;
 import phamthuy.ptithcm.model.Role;
 
 public class MemberDao extends AstractDao {
 
 	public List<Member> getAllMember() {
-		List<Member> list = getJdbcTemplate().query("SELECT * FROM Member", new MemberMapper());
-		return list;
+		List<Integer> arrMemberID = getAllRole();
+		List<Member> members = new ArrayList<Member>();
+		for (int i = 0; i < arrMemberID.size(); i++) {
+			List<Member> list = getJdbcTemplate().query("SELECT * FROM Member where MemberId = ?", new MemberMapper(), arrMemberID.get(i));
+			members.add(list.get(0));
+		}
+
+		return members;
 	}
 
 	public int delete(int id) {
@@ -27,7 +32,8 @@ public class MemberDao extends AstractDao {
 
 	public int delete(List<Integer> list) {
 		for (Integer id : list) {
-			return getJdbcTemplate().update("DELETE FROM MemberInRole WHERE MemberId = ?  DELETE FROM Member WHERE MemberId = ?", id);
+			return getJdbcTemplate()
+					.update("DELETE FROM MemberInRole WHERE MemberId = ?  DELETE FROM Member WHERE MemberId = ?", id);
 		}
 		return 1;
 	}
@@ -61,7 +67,7 @@ public class MemberDao extends AstractDao {
 		}
 		return a;
 	}
-	
+
 	public int addEmployee(Member member) {
 		String pass = Helper.bCrypt(member.getPassword());
 		int a = getJdbcTemplate().update(
@@ -79,7 +85,6 @@ public class MemberDao extends AstractDao {
 		}
 		return a;
 	}
-
 
 	public int updatePassword(String newPass, String email) {
 		String passbCrypt = Helper.bCrypt(newPass);
@@ -104,7 +109,7 @@ public class MemberDao extends AstractDao {
 		}
 		return -1;
 	}
-	
+
 	public int getMemberIDByPhone(String phone) {
 		List<Member> listMember = getJdbcTemplate().query("SELECT * FROM dbo.Member WHERE Tel = ?", new MemberMapper(),
 				phone);
@@ -142,5 +147,18 @@ public class MemberDao extends AstractDao {
 			return role.get(0);
 		}
 		return null;
+	}
+
+	public List<Integer> getAllRole() {
+		List<Integer> arrMemberID = getJdbcTemplate().query("SELECT MemberId FROM dbo.MemberInRole WHERE RoleId = 3",
+				new RowMapper<Integer>() {
+
+					@Override
+					public Integer mapRow(ResultSet rs, int rowNum) throws SQLException {
+						return rs.getInt("MemberId");
+					}
+
+				});
+		return arrMemberID;
 	}
 }

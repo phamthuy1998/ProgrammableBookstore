@@ -44,8 +44,9 @@ public class UploadController {
 	@RequestMapping(value = "simple", method = RequestMethod.POST)
 	public String simple(Model model, @RequestParam("f") MultipartFile part, HttpServletRequest request) {
 		try {
-			String path = request.getServletContext().getRealPath("/upload/");
+			String path = request.getServletContext().getRealPath("/images/");
 			String name = upload(path, part);
+			
 			model.addAttribute("name", name);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -60,7 +61,7 @@ public class UploadController {
 
 	@RequestMapping(value = "multi", method = RequestMethod.POST)
 	public String multi(Model model, @RequestParam("f") MultipartFile[] parts, HttpServletRequest request) {
-		String path = request.getServletContext().getRealPath("/upload/");
+		String path = request.getServletContext().getRealPath("/images/");
 		try {
 			model.addAttribute("list", upload(path, parts));
 		} catch (IOException e) {
