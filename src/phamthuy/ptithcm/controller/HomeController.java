@@ -8,11 +8,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 	@RequestMapping("index")
 	public String index() {
-		return "home/index";
+		return "admin/index";
 	}
 
 	@RequestMapping("about")
 	public String about() {
-		return "home/about";
+		return "admin/about";
+	}
+
+	@RequestMapping("contact")
+	public String contact() {
+		return "admin/contact";
 	}
 }

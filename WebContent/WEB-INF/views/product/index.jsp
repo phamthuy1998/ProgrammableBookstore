@@ -16,6 +16,19 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 
+<script>
+	$(function() {
+		$("a[data-lang]").click(function() {
+			var pathname = window.location.pathname;
+			/* alert(pathname); */
+			var lang = $(this).attr("data-lang");
+			$.get(pathname + "?language=" + lang, function() {
+				location.reload();
+			});
+			return false;
+		});
+	});
+</script>
 
 </head>
 <body>
@@ -30,7 +43,7 @@
 				<div class="item" >
 					<a
 						href="${pageContext.request.contextPath}/home/product/detail/${o.id}.htm">
-						<img class="img-product" alt="${o.title}"
+						<img class="img-product" alt="${o.title}" height="294px"
 						src="${pageContext.request.contextPath}/images/${o.imageUrl}">
 					</a>
 					<div class="info">

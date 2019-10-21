@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import phamthuy.ptithcm.dao.CartDao;
 import phamthuy.ptithcm.dao.ProductDao;
 import phamthuy.ptithcm.model.Author;
 import phamthuy.ptithcm.model.Product;
@@ -59,6 +60,7 @@ public class ProductController {
 	public String search(Model model, @RequestParam("q") String q) {
 		model.addAttribute("title", "Result for " + q);
 		model.addAttribute("list", productDao.search(q));
+		System.out.println("so phan tuw serch:"+productDao.search(q).size());
 		return "product/search";
 	}
 
@@ -354,6 +356,17 @@ public class ProductController {
 		else {
 			return "redirect:/user/login.htm";
 		}
+	}
+	
+	@ModelAttribute("cartNumber")
+	public int getCartCount() {
+		CartDao cartDao = new CartDao();
+		int cartcount =0;
+		if(MemberController.memberLoginForm!=null){
+			cartcount = cartDao.getCarts(MemberController.memberLoginForm.getId()).size();
+		}
+		
+		return cartcount;
 	}
 
 }

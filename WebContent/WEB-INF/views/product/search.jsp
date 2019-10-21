@@ -1,6 +1,25 @@
 
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+
+<script src="${pageContext.request.contextPath}/js/jquery-1.9.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/css.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+
+
+</head>
+<body>
 <form class="form-search" method="get"
 	action="${pageContext.request.contextPath}/home/search.htm">
 	<input type="text" placeholder="Search..." name="q">
@@ -10,7 +29,7 @@
 	<c:forEach var="o" items="${list}">
 		<div class="col-4">
 			<div class="item">
-				<img alt="${o.title}"   width="200"
+				<img alt="${o.title}"   height="294px" 
 					src="${pageContext.request.contextPath}/images/${o.imageUrl}">
 				<div class="info">
 					<a
@@ -21,3 +40,6 @@
 	</c:forEach>
 	<div class="clear"></div>
 </div>
+
+</body>
+</html>

@@ -41,7 +41,7 @@
 	</mvc:interceptors>
 
 	<!-- Cấu hình view -->
-	<bean id="viewResolver" p:prefix="/WEB-INF/views/index.jsp?view=" p:suffix=".jsp"
+	<bean id="viewResolver" p:prefix="/WEB-INF/views/layout-dispatch.jsp?view=" p:suffix=".jsp"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver" />
 
 	<!-- Cấu hình package chứa các controller -->
