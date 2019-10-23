@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import phamthuy.ptithcm.dao.AuthorDao;
 import phamthuy.ptithcm.model.Author;
 import phamthuy.ptithcm.model.Invoice;
+import phamthuy.ptithcm.model.Member;
+import phamthuy.ptithcm.model.Role;
 
 @Controller
 public class AuthorController {
@@ -179,5 +182,15 @@ public class AuthorController {
 		else {
 			return "redirect:/user/login.htm";
 		}
+	}
+	
+	@ModelAttribute("memberLoginForm")
+	public Member getMember() {
+		return MemberController.memberLoginForm;
+	}
+	
+	@ModelAttribute("roleLogin")
+	public Role getRole() {
+		return MemberController.roleLoginForm;
 	}
 }

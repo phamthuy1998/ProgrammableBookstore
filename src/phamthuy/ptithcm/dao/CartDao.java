@@ -21,7 +21,7 @@ public class CartDao extends AstractDao {
 				cart.getQuantity());
 	}
 
-	public int delete(String cartID, int productID) {
-		return getJdbcTemplate().update("DELETE FROM CART WHERE CartId = ? AND ProductId=?", cartID, productID);
+	public int delete(int cartID) {
+		return getJdbcTemplate().update("DELETE FROM CART WHERE CartId = ?", cartID);
 	}
 }

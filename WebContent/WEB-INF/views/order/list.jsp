@@ -20,52 +20,73 @@ span {
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
 
 <script type="text/javascript">
-
+	
 </script>
 </head>
 <body>
 
-	<form method="post">
-		<table class="table table-hover border  table-bordered ">
-			<tr class="table-primary">
-				<th>InvoiceId</th>
-				<th>Email</th>
-				<th>Tel</th>
-				<th>Address</th>
-				<th>Add date</th>
-				<th>Status</th>
-				<th>Detail</th>
-				<th></th>
-			</tr>
-			<c:forEach items="${list}" var="i">
 
-				<tr >
-					<td>${i.id}</td>
-					<td>${i.email}</td>
-					<td>${i.tel}</td>
-					<td>${i.address}</td>
-					<td><fmt:formatDate value="${i.date}" pattern="dd/MM/yyyy" />
-					</td>
-					<td>${i.status}</td>
-					<td><a
-						href="${pageContext.request.contextPath}/user/invoice/detail/${i.id}.htm">
-							<img src="${pageContext.request.contextPath}/images/order.png"
-							alt="Edit">
-					</a></td>
 
-					<td><c:if test="${i.statusId == 1}">
-							<a 
-								onclick="return confirm('Are you sure you want to cancel ${i.id}?')"
-								href="${pageContext.request.contextPath}/user/invoice/cancel/${i.id}.htm">
-								<img src="${pageContext.request.contextPath}/images/cancel.png"
-								alt="Delete">
-							</a>
-						</c:if></td>
+	<c:if test="${list.size()==0}">
+		<br>
+
+		<h1 class="center lb-login">
+			<s:message code="order_empty" />
+		</h1>
+		<br>
+		<br>
+		<form:form class="center">
+			<img src="${pageContext.request.contextPath}/images/cart_null.png">
+		</form:form>
+	</c:if>
+	<c:if test="${list.size()!=0}">
+		<br>
+
+		<h1 class="center lb-login">
+			<s:message code="list_order" />
+		</h1>
+		<br>
+		<form method="post">
+			<table class="table table-hover border  table-bordered ">
+				<tr class="table-primary">
+					<th>InvoiceId</th>
+					<th>Email</th>
+					<th>Tel</th>
+					<th>Address</th>
+					<th>Add date</th>
+					<th>Status</th>
+					<th>Detail</th>
+					<th></th>
 				</tr>
+				<c:forEach items="${list}" var="i">
 
-			</c:forEach>
-		</table>
-	</form>
+					<tr>
+						<td>${i.id}</td>
+						<td>${i.email}</td>
+						<td>${i.tel}</td>
+						<td>${i.address}</td>
+						<td><fmt:formatDate value="${i.date}" pattern="dd/MM/yyyy" />
+						</td>
+						<td>${i.status}</td>
+						<td><a
+							href="${pageContext.request.contextPath}/user/invoice/detail/${i.id}.htm">
+								<img src="${pageContext.request.contextPath}/images/order.png"
+								alt="Edit">
+						</a></td>
 
+						<td><c:if test="${i.statusId == 1}">
+								<a
+									onclick="return confirm('Are you sure you want to cancel ${i.id}?')"
+									href="${pageContext.request.contextPath}/user/invoice/cancel/${i.id}.htm">
+									<img src="${pageContext.request.contextPath}/images/cancel.png"
+									alt="Delete">
+								</a>
+							</c:if></td>
+					</tr>
+
+				</c:forEach>
+			</table>
+		</form>
+	</c:if>
 </body>
 </html>

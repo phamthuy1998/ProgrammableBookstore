@@ -34,9 +34,6 @@ span {
 
 </head>
 <body class="body-login">
-
-	<a href="#" data-lang="en"><s:message code="label.en" /></a> |
-	<a href="#" data-lang="vi"><s:message code="label.vi" /></a>
 	<div class="login">
 		<div class="col-ms-8 mx-auto">
 

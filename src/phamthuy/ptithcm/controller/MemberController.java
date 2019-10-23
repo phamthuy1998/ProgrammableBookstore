@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import phamthuy.ptit.helper.Helper;
+import phamthuy.ptithcm.dao.CartDao;
 import phamthuy.ptithcm.dao.MemberDao;
 import phamthuy.ptithcm.model.Member;
 import phamthuy.ptithcm.model.Role;
@@ -506,5 +507,27 @@ public class MemberController {
 			return "redirect:/user/login.htm";
 		}
 	}
+	
+	@ModelAttribute("cartNumber")
+	public int getCartCount() {
+		CartDao cartDao = new CartDao();
+		int cartcount = 0;
+		if (MemberController.memberLoginForm != null) {
+			cartcount = cartDao.getCarts(MemberController.memberLoginForm.getId()).size();
+		}
 
+		return cartcount;
+	}
+	
+
+	@ModelAttribute("memberLoginForm")
+	public Member getMember() {
+		return MemberController.memberLoginForm;
+	}
+
+
+	@ModelAttribute("roleLogin")
+	public Role getRole() {
+		return MemberController.roleLoginForm;
+	}
 }

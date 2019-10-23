@@ -46,6 +46,7 @@ span {
 			</tr>
 		</c:forEach>
 	</table> --%>
+	
 	<form:form modelAttribute="invoice" 
 		action="${pageContext.request.contextPath}/cart/checkout.htm"
 		class="form-login" style="margin:auto">

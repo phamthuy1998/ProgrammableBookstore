@@ -32,15 +32,23 @@
 
 </head>
 <body>
-	<form class="form-search" method="get"
-		action="${pageContext.request.contextPath}/home/search.htm">
-		<input type="text" placeholder="Search..." name="q">
-		<button class="btn btn-primary">Search</button>
-	</form>
+
 	<div class="products">
+		<c:if test="${list.size()==0}">
+			<br>
+
+			<h1 class="center lb-login">
+				<s:message code="order_empty" />
+			</h1>
+			<br>
+			<form:form class="center">
+				<img
+					src="${pageContext.request.contextPath}/images/product_empty.png">
+			</form:form>
+		</c:if>
 		<c:forEach var="o" items="${list}">
 			<div class="col-4">
-				<div class="item" >
+				<div class="item">
 					<a
 						href="${pageContext.request.contextPath}/home/product/detail/${o.id}.htm">
 						<img class="img-product" alt="${o.title}" height="294px"
@@ -63,6 +71,9 @@
 			</li>
 		</c:forEach>
 	</ul>
+
+
+
 
 </body>
 </html>

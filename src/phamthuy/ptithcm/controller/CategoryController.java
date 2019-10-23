@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import phamthuy.ptithcm.dao.CategoryDao;
 import phamthuy.ptithcm.model.Category;
+import phamthuy.ptithcm.model.Member;
+import phamthuy.ptithcm.model.Role;
 
 @Controller
 public class CategoryController {
@@ -226,5 +228,14 @@ public class CategoryController {
 		}
 
 	}
+	
+	@ModelAttribute("memberLoginForm")
+	public Member getMember() {
+		return MemberController.memberLoginForm;
+	}
 
+	@ModelAttribute("roleLogin")
+	public Role getRole() {
+		return MemberController.roleLoginForm;
+	}
 }

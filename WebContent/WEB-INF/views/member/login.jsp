@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" charset="utf-8">
-<title>Sign In|Sign up</title>
+<title><s:message code="label.login" /></title>
 <style type="text/css">
 span {
 	color: red;
@@ -30,12 +30,14 @@ span {
 
 				<div>
 					<label><s:message code="label.emailorphone" /></label>
-					<form:input class="form-control" placeholder="Email" type="text" path="email" />
+					<form:input class="form-control" placeholder="Email" type="text"
+						path="email" />
 					<form:errors path="email" />
 				</div>
 				<div>
 					<label><s:message code="label.password" /></label>
-					<form:input class="form-control"  placeholder="Password" type="password" path="password" />
+					<form:input class="form-control" placeholder="Password"
+						type="password" path="password" />
 					<form:errors path="password" />
 				</div>
 				<br>

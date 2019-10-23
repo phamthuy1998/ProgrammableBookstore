@@ -1,16 +1,10 @@
 package phamthuy.ptithcm.controller;
 
-import java.util.List;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import phamthuy.ptithcm.dao.CartDao;
 import phamthuy.ptithcm.dao.InvoiceDao;
 import phamthuy.ptithcm.model.Cart;
+import phamthuy.ptithcm.model.Member;
+import phamthuy.ptithcm.model.Role;
 
 @Controller
 @RequestMapping("cart")
@@ -29,12 +25,15 @@ public class CartController {
 	public static boolean checkAddCart = false;
 
 	// Del category
-	@RequestMapping("del/{productId}")
-	public String delete(@PathVariable("productId") int productId, @CookieValue("cart") String id) {
-		System.out.println("vo del: " + id);
-
-		cartDao.delete(id, productId);
-		return "redirect:/cart/index.htm";
+	@RequestMapping("del/{id}")
+	public String delete(@PathVariable("id") int id) {
+		if (MemberController.roleLoginForm.getId() == 2) {
+			System.out.println("vo del: " + id);
+			cartDao.delete(id);
+			return "redirect:/cart/index.htm";
+		}else{
+			return "redirect:/cart/index.htm";
+		}
 	}
 
 	@RequestMapping(value = "add", method = RequestMethod.POST)
@@ -86,15 +85,24 @@ public class CartController {
 			return "redirect:/user/login.htm";
 		}
 	}
-	
+
 	@ModelAttribute("cartNumber")
 	public int getCartCount() {
-		int cartcount =0;
-		if(MemberController.memberLoginForm!=null){
+		int cartcount = 0;
+		if (MemberController.memberLoginForm != null) {
 			cartcount = cartDao.getCarts(MemberController.memberLoginForm.getId()).size();
 		}
-		
+
 		return cartcount;
 	}
 
+	@ModelAttribute("memberLoginForm")
+	public Member getMember() {
+		return MemberController.memberLoginForm;
+	}
+
+	@ModelAttribute("roleLogin")
+	public Role getRole() {
+		return MemberController.roleLoginForm;
+	}
 }

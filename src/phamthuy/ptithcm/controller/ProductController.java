@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,9 +22,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import phamthuy.ptithcm.dao.CartDao;
+import phamthuy.ptithcm.dao.CategoryDao;
 import phamthuy.ptithcm.dao.ProductDao;
 import phamthuy.ptithcm.model.Author;
+import phamthuy.ptithcm.model.Category;
+import phamthuy.ptithcm.model.Member;
 import phamthuy.ptithcm.model.Product;
+import phamthuy.ptithcm.model.Role;
 
 @Controller
 public class ProductController {
@@ -47,6 +52,14 @@ public class ProductController {
 		return "product/index";
 
 	}
+	
+	@RequestMapping("home/browse/{id}")
+	public String browse(Model model,@PathVariable("id") int id) {
+		model.addAttribute("size",productDao.getProductsByCategoryID(id).size());
+		model.addAttribute("list", productDao.getProductsByCategoryID(id));
+		return "product/index";
+
+	}
 
 	@RequestMapping("home/product/detail/{id}")
 	public String detail(Model model, @PathVariable("id") int id) {
@@ -60,7 +73,7 @@ public class ProductController {
 	public String search(Model model, @RequestParam("q") String q) {
 		model.addAttribute("title", "Result for " + q);
 		model.addAttribute("list", productDao.search(q));
-		System.out.println("so phan tuw serch:"+productDao.search(q).size());
+		System.out.println("so phan tuw serch:" + productDao.search(q).size());
 		return "product/search";
 	}
 
@@ -206,7 +219,7 @@ public class ProductController {
 			// admin
 			if (MemberController.roleLoginForm.getId() == 1 || MemberController.roleLoginForm.getId() == 3) {
 				System.out.println("vo del");
-				
+
 				delFile(id, request);
 				productDao.delete(id);
 				return "redirect:/admin/products.htm";
@@ -230,7 +243,7 @@ public class ProductController {
 		if (file.exists()) {
 			// del file
 			file.delete();
-			
+
 			if (file.exists())
 				return false;
 			else
@@ -357,16 +370,34 @@ public class ProductController {
 			return "redirect:/user/login.htm";
 		}
 	}
-	
+
 	@ModelAttribute("cartNumber")
 	public int getCartCount() {
 		CartDao cartDao = new CartDao();
-		int cartcount =0;
-		if(MemberController.memberLoginForm!=null){
+		int cartcount = 0;
+		if (MemberController.memberLoginForm != null) {
 			cartcount = cartDao.getCarts(MemberController.memberLoginForm.getId()).size();
 		}
-		
+
 		return cartcount;
 	}
 
+	@ModelAttribute("category")
+	public List<Category> getallcategory() {
+		CategoryDao categoryDao = new CategoryDao();
+		List<Category> list = categoryDao.getAllCategory();
+		return list;
+	}
+	
+	
+	@ModelAttribute("memberLoginForm")
+	public Member getMember() {
+		return MemberController.memberLoginForm;
+	}
+
+
+	@ModelAttribute("roleLogin")
+	public Role getRole() {
+		return MemberController.roleLoginForm;
+	}
 }

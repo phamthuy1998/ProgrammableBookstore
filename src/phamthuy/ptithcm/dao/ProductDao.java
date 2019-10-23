@@ -82,6 +82,18 @@ public class ProductDao extends AstractDao {
 				product.getIsbn(), product.getPrice(), product.getPages(), product.getImageUrl(), id);
 	}
 
+	public List<Product> getProductsByCategoryID(int id) {
+		return getJdbcTemplate().query(
+				"SELECT * FROM dbo.Product WHERE CategoryId = ?",
+				new RowMapper<Product>() {
+					@Override
+					public Product mapRow(ResultSet rs, int numRow) throws SQLException {
+						return new Product(rs.getInt("ProductId"), rs.getString("Title"), rs.getString("ISBN"),
+								rs.getInt("Price"), rs.getString("Pages"), rs.getString("ImageUrl"));
+					}
+				}, id);
+	}
+
 	// public int updateImg(Product product) {
 	// return getJdbcTemplate().update("UPDATE Product SET ImageUrl = ? WHERE
 	// ProductId = ?", product.getImageUrl(),
