@@ -58,7 +58,7 @@
 
 <a href="${pageContext.servletContext.contextPath}/admin/products.htm"
 	class="btn btn-primary"><s:message code="products" /></a>
-
+<%-- 
 <form class="form-search mr-5" method="get"
 	action="${pageContext.request.contextPath}/home/search.htm">
 	<input type="text" placeholder="<s:message code="search" />..."
@@ -67,3 +67,4 @@
 		<s:message code="search" />
 	</button>
 </form>
+ --%>

@@ -33,7 +33,20 @@
 </head>
 <body>
 	<div class="container">
-		<div data-mesh-internal="true">
+		<br> <img alt=""
+			src="https://s26162.pcdn.co/wp-content/uploads/2018/12/11-bookstores-6-three-lives-2.w710.h473.2x.jpg" />
+
+		<br>
+		<div class="center">
+			<h1 style="color: #ff3300;">Giới thiệu</h1>
+		</div>
+		<div class="center">
+			<p>
+				<s:message code="about_us" />
+			</p>
+		</div>
+
+		<%-- <div data-mesh-internal="true">
 			<div id="mediairc2azfx3inlineContent-gridContainer"
 				data-mesh-internal="true">
 				<div data-packed="true"
@@ -248,8 +261,50 @@
 				<div id="mediairc2azfx3inlineContent-wedge-9"
 					data-mesh-internal="true"></div>
 			</div>
-		</div>
+		</div> --%>
 
+	</div>
+	<div>
+		<footer>
+			<div class="w3l-middlefooter-sec">
+				<div class="container py-md-5 py-sm-4 py-3">
+					<div class="row footer-info w3-agileits-info">
+						<!-- footer categories -->
+						<!-- //footer categories -->
+						<!-- quick links -->
+						<div class="col-md-3 col-sm-6 footer-grids mt-sm-0 mt-4">
+							<h3 class="text-white font-weight-bold mb-3">Quick Links</h3>
+							<ul>
+								<li class="mb-3"><a href="about.html">About Us</a></li>
+								<li class="mb-3"><a href="contact.html">Contact Us</a></li>
+								<li class="mb-3"><a href="help.html">Help</a></li>
+								<li class="mb-3"><a href="faqs.html">Faqs</a></li>
+								<li class="mb-3"><a href="terms.html">Terms of use</a></li>
+								<li><a href="privacy.html">Privacy Policy</a></li>
+							</ul>
+						</div>
+						<div class="col-md-3 col-sm-6 footer-grids mt-md-0 mt-4">
+							<h3 class="text-white font-weight-bold mb-3">Get in Touch</h3>
+							<ul>
+								<li class="mb-3"><i class="fas fa-map-marker"></i> 97,
+									District 9, HCM city</li>
+								<li class="mb-3"><i class="fas fa-mobile"></i> + 84 373 875
+									759</li>
+								<li class="mb-3"><i class="fas fa-phone"></i> + 84 768 865
+									799</li>
+								<li class="mb-3"><i class="fas fa-envelope-open"></i> <a
+									href="mailto:cnpmptit@gmail.com"> mail 1:
+										cnpmptit@gmail.com</a></li>
+								<li><i class="fas fa-envelope-open"></i> <a
+									href="mailto:thuypham@gmail.com"> mail 2:
+										thuypham@gmail.com</a></li>
+							</ul>
+						</div>
+					</div>
+					<!-- //quick links -->
+				</div>
+			</div>
+		</footer>
 	</div>
 </body>
 </html>

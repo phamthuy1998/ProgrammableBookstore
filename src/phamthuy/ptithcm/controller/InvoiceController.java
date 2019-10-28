@@ -77,7 +77,7 @@ public class InvoiceController {
 				invoice.setMemberId(MemberController.memberLoginForm.getId());
 				// }
 				invoiceDao.add(invoice);
-				return "redirect:/cart/index.htm";
+				return "redirect:/user/invoices.htm";
 			}
 
 		} else {

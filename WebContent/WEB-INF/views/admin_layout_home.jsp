@@ -44,7 +44,9 @@
 </head>
 <body>
 	<nav>
-		<jsp:include page="menu_admin.jsp" />
+		<div class="container">
+			<jsp:include page="menu_admin.jsp" />
+		</div>
 	</nav>
 	<div class="container">
 		<br>
