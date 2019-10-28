@@ -55,14 +55,17 @@
 				<s:message code="price_book" />
 				: <b><fmt:formatNumber value="${o.price}" type="currency" /></b>
 			</p>
+
 			<form method="post"
 				action="${pageContext.request.contextPath}/cart/add.htm">
 
 				<input type="hidden" value="${o.id}" name="productId"> <input
 					type="number" name="quantity" value="1"> <br>
-				<button class="btn btn-primary mt-3"><s:message code="add_cart" /></button>
+				<button class="btn btn-primary mt-3">
+					<s:message code="add_cart" />
+				</button>
 			</form>
-			
+
 			<br>
 		</div>
 		<br>
