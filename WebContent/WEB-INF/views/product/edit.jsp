@@ -72,13 +72,12 @@ span {
 
 				<p>
 					<label><s:message code="image_book" /></label> <br> <input
-						type="file" name="f">
+						type="file" name="f"  accept="image/png, image/jpeg">
 					<form:errors path="imageUrl" />
 				</p>
 
 				<img width="150px"
 					src="${pageContext.request.contextPath}/images/${product.imageUrl}">
-				</p>
 
 				<p>
 					<button class="btn btn-lg btn-primary">

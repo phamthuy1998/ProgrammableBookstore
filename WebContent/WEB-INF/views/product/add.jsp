@@ -114,7 +114,7 @@ span {
 
 				<p>
 					<label><s:message code="image_book" /></label> <br> <input
-						type="file" name="f">
+						type="file" name="f"  accept="image/png, image/jpeg">
 					<form:errors path="imageUrl" />
 				</p>
 
